@@ -1,0 +1,141 @@
+{
+  "kind": "Template",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "${APP}",
+    "creationTimestamp": null
+  },
+  "objects": [
+    {
+      "apiVersion": "v1",
+      "kind": "Service",
+      "metadata":{
+        "creationTimestamp": null,
+        "labels": {
+          "app": "${APP}"
+        },
+        "name": "${APP}"
+      },
+      "spec": {
+        "ports": [
+          {
+            "name": "${APP}-tcp",
+            "port": 8888,
+            "protocol": "TCP",
+            "targetPort": 8888
+          }
+        ],
+        "selector": {
+          "app": "${APP}",
+          "deploymentconfig": "${APP}"
+        },
+        "sessionAffinity": "None",
+        "type": "ClusterIP"
+      },
+      "status": {
+        "loadBalancer": {}
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "DeploymentConfig",
+      "metadata":{
+        "creationTimestamp": null,
+        "labels": {
+          "app": "${APP}",
+          "deploymentconfig": "${APP}"
+        },
+        "name": "${APP}"
+      },
+      "spec": {
+        "replicas": 1,
+        "selector": {
+          "app": "${APP}",
+          "deploymentconfig": "${APP}"
+        },
+        "stratey": {
+          "resource": {},
+          "rollingParams": {
+            "intervalSeconds": 1,
+            "maxSurge": "25%",
+            "maxUnavailable": "25%",
+            "timeoutSeconds": 600,
+            "updatePeriodSeconds": 1
+          },
+          "type": "Rolling"
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "app": "${APP}",
+              "deploymentconfig": "${APP}"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "name": "${APP}",
+                "image": "${IMAGE}",
+                "ports": [
+                  {
+                    "containerPort": "${PORT}",
+                    "protocol": "TCP"
+                  }
+                ],
+                "env": [
+                  {
+                    "name": "JAVA_VM_OPTS",
+                    "value": "-Xmx512m -Dspring.profiles.active=${PROFILE}"
+                  }
+                ],
+                "terminationMessagePath": "/dev/termination-log",
+                "imagePullPolicy": "IfNotPresent"
+              }
+            ],
+            "dnsPolicy": "ClusterFirst",
+            "restartPolicy": "Always",
+            "terminationGracePeriodSeconds": 30
+          }
+        }
+      },
+      "status": {}
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Route",
+      "metadata":{
+        "creationTimestamp": null,
+        "labels": {
+          "app": "${APP}"
+        },
+        "name": "${APP}"
+      },
+      "spec": {
+        "host": "${HOST}",
+        "to": {
+          "kind": "Service",
+          "name": "${APP}"
+        }
+      },
+      "status": {}
+    }
+  ],
+  "parameters": [
+    {
+      "name": "APP"
+    },
+    {
+      "name": "IMAGE"
+    },
+    {
+      "name": "PORT"
+    },
+    {
+      "name": "HOST"
+    },
+    {
+      "name": "PROFILE"
+    }
+  ]
+}

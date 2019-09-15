@@ -1,0 +1,4 @@
+APP=fuzzy-matching-engine
+IMAGE=fuzzy-matching-engine
+HOST=fuzzy-matching-engine-myproject.127.0.0.1.nip.io
+PORT=8888
