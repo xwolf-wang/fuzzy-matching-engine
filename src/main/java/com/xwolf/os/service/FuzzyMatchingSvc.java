@@ -44,54 +44,8 @@ public class FuzzyMatchingSvc {
 
         MatchResponse response = matchingSvc.process(trade);
 
-        //show match result
-
-
-
         return response;
     }
 
-    /*private void saveTradeWithIndex(Trade trade, String index) {
-        TradeEntity tradeEntity = new TradeEntity();
-        tradeEntity.setSourceSystem(trade.getSourceSystem());
-        tradeEntity.setTradeType(trade.getTradeType());
-        tradeEntity.setTradeJsonStr(trade.toString());
-        tradeEntity.setUuid(trade.getUuid());
-        tradeRepository.save(tradeEntity);
-    }
-
-    public String generateMatchIndex(Trade trade) {
-        MatchRule rule = findMatchRule(trade);
-        return generateMatchIndexByRule(trade,rule);
-    }
-
-    private String generateMatchIndexByRule(Trade trade, MatchRule rule) {
-        if(StringUtils.equals(trade.getTradeType(),rule.getLeftTradeType()))
-        {
-            return trade.getFields().stream()
-                    .filter(e-> isMatchedLeftField(e,rule))
-                    .map(e->e.getValue())
-                    .collect(Collectors.joining("|"));
-        }
-
-        if(StringUtils.equals(trade.getTradeType(),rule.getRightTradeType()))
-        {
-            return trade.getFields().stream()
-                    .filter(e-> isMatchedRightField(e,rule))
-                    .map(e->e.getValue())
-                    .collect(Collectors.joining("|"));
-        }
-
-        return null;
-    }
-
-
-    private boolean isMatchedRightField(Map field, MatchRule rule) {
-        return rule.getMatchFields().stream().anyMatch(e -> StringUtils.equals(field.entrySet(), e.getRightField()));
-    }
-
-    private boolean isMatchedLeftField(Map field, MatchRule rule) {
-        return rule.getMatchFields().stream().anyMatch(e -> StringUtils.equals(field., e.getLeftField()));
-    }*/
 
 }

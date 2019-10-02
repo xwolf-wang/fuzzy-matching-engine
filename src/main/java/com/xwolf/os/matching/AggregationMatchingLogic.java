@@ -39,12 +39,7 @@ public class AggregationMatchingLogic {
 
         return Optional.empty();
     }
-    /**
-     * 搜索result在list中，有多少种组合
-     * @param target
-     * @param list
-     * @return
-     */
+
     public List<List<Trade>> searchSingle(Trade target, List<Trade> list){
         MatchRule rule = ruleConfigSvc.findMatchRule(target.getTradeType()).get();
 
@@ -63,14 +58,7 @@ public class AggregationMatchingLogic {
         searchGroup(resultValue.get(), 0,list,results, new ArrayList<> (), rule);
         return results;
     }
-    /**
-     *  @param result 目标结果
-     * @param index 从集合list那个位置开始搜索
-     * @param list 源数据
-     * @param results 能组成目标结果的结果集
-     * @param resultList 中间结果
-     * @param rule
-     */
+
     public void searchGroup(int result, int index, List<Trade> list, List<List<Trade>> results, List<Trade> resultList, MatchRule rule){
         if(index + 1 > list.size()){
             return;
@@ -92,16 +80,7 @@ public class AggregationMatchingLogic {
             searchGroup(result, index + 1, list, results, resultList, rule);
         }
     }
-    /**
-     * 判断list中的元素和加上element的和与result的关系
-     * 1.如果等于result返回0，
-     * 2.如果大于result返回1，
-     * 3.如果小于result返回-1。
-     * @param list
-     * @param element
-     * @param result
-     * @return
-     */
+
     public int sum(List<Trade> list, int element, int result, MatchRule rule){
         int sum = element;
         for(Trade temp : list){
