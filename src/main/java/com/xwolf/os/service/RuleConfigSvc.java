@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.xwolf.os.domain.MatchField.*;
+
 /**
  * @author ming
  * @Description:
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
  **/
 @Service
 public class RuleConfigSvc {
+
 
     private List<MatchRule> rules = new ArrayList<>();
 
@@ -28,12 +31,12 @@ public class RuleConfigSvc {
         rule.setLeftPrimaryKey("oraderId");
         rule.setRightTradeType("fusion_execution");
         rule.setRightPrimaryKey("tradeId");
-        rule.getMatchFields().add(new MatchField("tradePrice","trdPrice","avg"));
-        rule.getMatchFields().add(new MatchField("quantity","qty","mandatory_aggregate"));
-        rule.getMatchFields().add(new MatchField("firm", "firm","mandatory"));
-        rule.getMatchFields().add(new MatchField("cust", "customer","mandatory"));
-        rule.getMatchFields().add(new MatchField("user", "user","fuzzy"));
-        rule.getMatchFields().add(new MatchField("exec", "execBy","fuzzy"));
+        rule.getMatchFields().add(new MatchField("tradePrice","trdPrice", AVG));
+        rule.getMatchFields().add(new MatchField("quantity","qty", MANDATORY_AGGREGATE));
+        rule.getMatchFields().add(new MatchField("firm", "firm", MANDATORY));
+        rule.getMatchFields().add(new MatchField("cust", "customer", MANDATORY));
+        rule.getMatchFields().add(new MatchField("user", "user", FUZZY));
+        rule.getMatchFields().add(new MatchField("exec", "execBy",FUZZY));
 
         rules.add(rule);
     }
@@ -46,6 +49,7 @@ public class RuleConfigSvc {
     public Optional<String> findMatchedTradeType(String tradeType){
         return this.findMatchRule(tradeType).map(e -> findMatchedTradeType(e, tradeType));
     }
+
 
     private String findMatchedTradeType(MatchRule rule, String tradeType) {
         if(StringUtils.equals(rule.getLeftTradeType(),tradeType))

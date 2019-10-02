@@ -5,10 +5,12 @@ import com.xwolf.os.domain.Trade;
 import com.xwolf.os.matching.AggregationMatchingLogic;
 import com.xwolf.os.matching.FuzzyMatchingLogic;
 import com.xwolf.os.matching.MandatoryMatchingLogic;
+import me.xdrop.fuzzywuzzy.model.ExtractedResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author ming
@@ -39,7 +41,7 @@ public class MatchingSvc {
         List<Trade> mandatoryMatchingResult = mandatoryMatchingLogic.process(trade,candidateList);
 
         //do fuzzy match and show the ratio
-        List fuzzyMatchResult = fuzzyMatchingLogic.process(trade,mandatoryMatchingResult);
+        Map<Trade, ExtractedResult> fuzzyMatchResult = fuzzyMatchingLogic.process(trade,mandatoryMatchingResult);
 
         //do aggregation
         List aggregationMatchResult = aggregationMatchingLogic.process(trade,fuzzyMatchResult);

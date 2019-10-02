@@ -20,8 +20,11 @@ public class AggregateAlgoTest {
         List<Integer> list = new ArrayList<>(intArrays.length);
         Collections.addAll(list, intArrays);
         List<List<Integer>> results = searchSingle(8,list);
+        int i=1;
         for(List<Integer> result : results){
+            System.out.println("group " + i);
             System.out.println(result);
+            i++;
         }
     }
 }

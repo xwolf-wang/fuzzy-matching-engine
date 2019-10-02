@@ -11,6 +11,12 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class MatchField {
+
+    public static final String MANDATORY = "mandatory";
+    public static final String MANDATORY_AGGREGATE = "mandatory_aggregate";
+    public static final String FUZZY = "fuzzy";
+    public static final String AVG = "avg";
+
     public String leftField;
     public String rightField;
     public String matchingType;
