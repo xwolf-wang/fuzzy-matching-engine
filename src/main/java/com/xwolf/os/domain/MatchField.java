@@ -13,4 +13,6 @@ import lombok.Data;
 public class MatchField {
     public String leftField;
     public String rightField;
+    public String matchingType;
+
 }

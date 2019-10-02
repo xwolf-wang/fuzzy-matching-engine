@@ -13,10 +13,10 @@ import java.util.Map;
  **/
 @Data
 public class MatchRule {
-    private String sourceSystem;
     private String leftTradeType;
+    private String leftPrimaryKey;
     private String rightTradeType;
-    private List<MatchField> matchFields = new ArrayList<MatchField>();
-    private int precision;
+    private String rightPrimaryKey;
+    private List<MatchField> matchFields = new ArrayList<>();
 
 }

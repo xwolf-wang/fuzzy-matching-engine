@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author ming
@@ -14,10 +14,9 @@ import java.util.List;
  **/
 @Data
 public class Trade {
-    private String uuid;
-    private String sourceSystem;
+    private String primaryKey;
     private String tradeType;
-    private List<Field> fields = new ArrayList<Field>();
+    private Map<String,String> fields = new HashMap();
 
     @Override
     public String toString() {

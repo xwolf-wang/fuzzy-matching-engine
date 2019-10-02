@@ -1,14 +1,5 @@
 package com.xwolf.os;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.xwolf.os.db.RuleEntity;
-import com.xwolf.os.domain.Field;
-import com.xwolf.os.domain.Trade;
-import com.xwolf.os.matching.AverageFuzzyMatchingStratergy;
-import com.xwolf.os.matching.AverageFuzzyMatchingResult;
-import com.xwolf.os.service.FuzzyMatchingSvc;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
@@ -33,7 +24,7 @@ public class InputMessageTest {
     }
 
 
-    @Test
+    /*@Test
     public void testInputMessage() throws JsonProcessingException {
         Trade trade = new Trade();
         trade.setSourceSystem("fusion");
@@ -82,5 +73,5 @@ public class InputMessageTest {
         System.out.println(json1);
         //{"id":null,"sourceSystem":"fusion","leftTradeType":"fill","leftField":"quantity","rightTradeType":"excution","rightField":"qty"}
 
-    }
+    }*/
 }

@@ -4,10 +4,15 @@ import com.xwolf.os.db.RuleRepository;
 import com.xwolf.os.db.TradeEntity;
 import com.xwolf.os.db.TradeRepository;
 import com.xwolf.os.domain.*;
+import com.xwolf.os.matching.AggregationMatchingLogic;
+import com.xwolf.os.matching.FuzzyMatchingLogic;
+import com.xwolf.os.matching.MandatoryMatchingLogic;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -18,25 +23,35 @@ import java.util.stream.Collectors;
 @Service
 public class FuzzyMatchingSvc {
 
-    @Autowired
-    TradeRepository tradeRepository;
 
     @Autowired
-    RuleRepository ruleRepository;
+    private TradeSvc tradeSvc;
+
+    @Autowired
+    private MatchingSvc matchingSvc;
+
+
+
+
 
 
     public MatchResponse match(Trade trade){
 
-        String index = generateMatchIndex(trade);
-        saveTradeWithIndex(trade,index);
+        //get the matching rule based on trade type
 
-        MatchResponse response = new MatchResponse();
+        //populate primary key and save
+        tradeSvc.save(trade);
+
+        MatchResponse response = matchingSvc.process(trade);
+
+        //show match result
+
 
 
         return response;
     }
 
-    private void saveTradeWithIndex(Trade trade, String index) {
+    /*private void saveTradeWithIndex(Trade trade, String index) {
         TradeEntity tradeEntity = new TradeEntity();
         tradeEntity.setSourceSystem(trade.getSourceSystem());
         tradeEntity.setTradeType(trade.getTradeType());
@@ -71,25 +86,12 @@ public class FuzzyMatchingSvc {
     }
 
 
-    private boolean isMatchedRightField(Field field, MatchRule rule) {
-        return rule.getMatchFields().stream().anyMatch(e -> StringUtils.equals(field.getName(), e.getRightField()));
+    private boolean isMatchedRightField(Map field, MatchRule rule) {
+        return rule.getMatchFields().stream().anyMatch(e -> StringUtils.equals(field.entrySet(), e.getRightField()));
     }
 
-    private boolean isMatchedLeftField(Field field, MatchRule rule) {
-        return rule.getMatchFields().stream().anyMatch(e -> StringUtils.equals(field.getName(), e.getLeftField()));
-    }
+    private boolean isMatchedLeftField(Map field, MatchRule rule) {
+        return rule.getMatchFields().stream().anyMatch(e -> StringUtils.equals(field., e.getLeftField()));
+    }*/
 
-    private MatchRule findMatchRule(Trade trade) {
-        MatchRule rule = new MatchRule();
-        rule.setSourceSystem("fusion");
-        rule.setLeftTradeType("fill");
-        rule.setRightTradeType("excution");
-        rule.setPrecision(13);
-        rule.getMatchFields().add(new MatchField("tradePrice","trdPrice"));
-        rule.getMatchFields().add(new MatchField("quantity","qty"));
-        rule.getMatchFields().add(new MatchField("firm", "firm"));
-        rule.getMatchFields().add(new MatchField("cust", "customer"));
-
-        return rule;
-    }
 }
