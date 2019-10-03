@@ -1,12 +1,10 @@
 package com.xwolf.os.controller;
 
-import com.xwolf.os.db.RuleEntity;
-import com.xwolf.os.db.RuleRepository;
-import com.xwolf.os.domain.Trade;
 import com.xwolf.os.service.FuzzyMatchingEngineSvc;
-import com.xwolf.os.service.TradeSvc;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
@@ -22,13 +20,13 @@ public class MatchingRestController {
     FuzzyMatchingEngineSvc fuzzyMatchingEngineSvc;
 
     @PostMapping("chanel_fusion_fill")
-    public String chanel1(@RequestBody Map fieldMap){
-        return fuzzyMatchingEngineSvc.match("fusion_fill",fieldMap);
+    public String chanel1(@RequestBody Map fieldMap) {
+        return fuzzyMatchingEngineSvc.match("fusion_fill", fieldMap);
 
     }
 
     @PostMapping("chanel_fusion_execution")
-    public String chanel2(@RequestBody Map fieldMap){
-        return fuzzyMatchingEngineSvc.match("fusion_execution",fieldMap);
+    public String chanel2(@RequestBody Map fieldMap) {
+        return fuzzyMatchingEngineSvc.match("fusion_execution", fieldMap);
     }
 }
