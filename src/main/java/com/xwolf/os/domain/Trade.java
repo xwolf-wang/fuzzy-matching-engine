@@ -14,7 +14,7 @@ import java.util.Map;
  **/
 @Data
 public class Trade {
-    private String primaryKey;
+    private String uuid;
     private String tradeType;
     private Map<String,String> fields = new HashMap();
 

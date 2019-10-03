@@ -57,7 +57,7 @@ public class TradeSvc {
         Trade trade = new Trade();
 
         trade.setTradeType(tradeType);
-        trade.setPrimaryKey(map.get(primaryKey));
+        trade.setUuid(tradeType + "_" + map.get(primaryKey));
         trade.setFields(map);
 
         return trade;
