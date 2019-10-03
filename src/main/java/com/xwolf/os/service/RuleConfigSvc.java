@@ -32,6 +32,7 @@ public class RuleConfigSvc {
         rule.setRightTradeType("fusion_execution");
         rule.setRightPrimaryKey("tradeId");
         rule.setCutoffRatio(90);
+        rule.setAvgPrecision(0.2);
         rule.getMatchFields().add(new MatchField("tradePrice","trdPrice", AVG));
         rule.getMatchFields().add(new MatchField("quantity","qty", MANDATORY_AGGREGATE));
         rule.getMatchFields().add(new MatchField("firm", "firm", MANDATORY));

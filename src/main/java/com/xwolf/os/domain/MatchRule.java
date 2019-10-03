@@ -18,6 +18,7 @@ public class MatchRule {
     private String rightTradeType;
     private String rightPrimaryKey;
     private Integer cutoffRatio;
+    private Double avgPrecision;
     private List<MatchField> matchFields = new ArrayList<>();
 
 }

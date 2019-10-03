@@ -27,9 +27,9 @@ public class FuzzyMatchingLogic {
     RuleConfigSvc ruleConfigSvc;
 
     public List<FuzzyTrade> process(Trade trade, List<Trade> mandatoryMatchingResult) {
+        MatchRule rule = ruleConfigSvc.findMatchRule(trade.getTradeType()).get();
 
         List<String> indexList = new ArrayList<>();
-        MatchRule rule = ruleConfigSvc.findMatchRule(trade.getTradeType()).get();
         for (Trade trd : mandatoryMatchingResult) {
             indexList.add(generateMatchIndexByRule(trd, rule));
         }

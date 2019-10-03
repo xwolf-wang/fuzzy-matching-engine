@@ -1,19 +1,10 @@
 package com.xwolf.os.service;
 
-import com.xwolf.os.db.RuleRepository;
-import com.xwolf.os.db.TradeEntity;
-import com.xwolf.os.db.TradeRepository;
 import com.xwolf.os.domain.*;
-import com.xwolf.os.matching.AggregationMatchingLogic;
-import com.xwolf.os.matching.FuzzyMatchingLogic;
-import com.xwolf.os.matching.MandatoryMatchingLogic;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author ming
@@ -35,14 +26,14 @@ public class FuzzyMatchingSvc {
 
 
 
-    public MatchResponse match(Trade trade){
+    public List<List<FuzzyTrade>> match(Trade trade){
 
         //get the matching rule based on trade type
 
         //populate primary key and save
         tradeSvc.save(trade);
 
-        MatchResponse response = matchingSvc.process(trade);
+        List<List<FuzzyTrade>> response = matchingSvc.process(trade);
 
         return response;
     }

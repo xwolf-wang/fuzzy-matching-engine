@@ -39,7 +39,7 @@ public class MatchingSvc {
     @Autowired
     AverageMatchingLogic averageMatchingLogic;
 
-    public MatchResponse process(Trade trade){
+    public List<List<FuzzyTrade>> process(Trade trade){
 
         //get the other side trade list
         List<Trade> candidateList = tradeSvc.findCandidateTrades(trade.getTradeType());
@@ -52,12 +52,14 @@ public class MatchingSvc {
 
         //do aggregation
         List<List<FuzzyTrade>> aggregationMatchResult = aggregationMatchingLogic.process(trade,fuzzyMatchResult);
-
+        System.out.println("aggregationMatchResult result: size - " + aggregationMatchResult.size());
         AggregationPrint.print(aggregationMatchResult);
 
         //do average calculation
         List<List<FuzzyTrade>> averageMatchResult = averageMatchingLogic.process(trade,aggregationMatchResult);
+        System.out.println("averageMatchingLogic result: size - " + averageMatchResult.size());
+        AggregationPrint.print(averageMatchResult);
 
-        return null;
+        return averageMatchResult;
     }
 }
