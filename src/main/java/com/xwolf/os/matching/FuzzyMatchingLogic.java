@@ -45,7 +45,7 @@ public class FuzzyMatchingLogic {
             fuzzyTrade.setFuzzyInfo(result);
             fuzzyTradeList.add(fuzzyTrade);
         }
-        System.out.println(fuzzyTradeList);
+
 
         return fuzzyTradeList;
     }

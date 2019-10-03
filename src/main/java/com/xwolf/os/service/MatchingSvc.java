@@ -7,9 +7,11 @@ import com.xwolf.os.matching.AggregationMatchingLogic;
 import com.xwolf.os.matching.AverageMatchingLogic;
 import com.xwolf.os.matching.FuzzyMatchingLogic;
 import com.xwolf.os.matching.MandatoryMatchingLogic;
+import com.xwolf.os.utils.AggregationPrint;
 import me.xdrop.fuzzywuzzy.model.ExtractedResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
@@ -19,7 +21,7 @@ import java.util.Map;
  * @Description:
  * @create 2019-10-02 7:46 AM
  **/
-@Component
+@Service
 public class MatchingSvc {
 
     @Autowired
@@ -51,7 +53,10 @@ public class MatchingSvc {
         //do aggregation
         List<List<FuzzyTrade>> aggregationMatchResult = aggregationMatchingLogic.process(trade,fuzzyMatchResult);
 
+        AggregationPrint.print(aggregationMatchResult);
+
         //do average calculation
+        List<List<FuzzyTrade>> averageMatchResult = averageMatchingLogic.process(trade,aggregationMatchResult);
 
         return null;
     }

@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author ming
@@ -18,80 +17,79 @@ import java.util.stream.Collectors;
  **/
 @Component
 public class AggregationMatchingLogic {
-    public List<List<FuzzyTrade>> process(Trade trade, List<FuzzyTrade> fuzzyMatchResult) {
-
-        return searchSingle(trade,fuzzyMatchResult);
-    }
-
     @Autowired
     RuleConfigSvc ruleConfigSvc;
 
-    private Optional<Integer> getAggregateFieldValue(Trade trade, MatchRule rule){
-        if(rule.getLeftTradeType().equals(trade.getTradeType())){
-            return rule.getMatchFields().stream()
-                    .filter(e -> e.getMatchingType().equals(MatchField.MANDATORY_AGGREGATE))
-                    .map(e -> trade.getFields().get(e.getLeftField())).findFirst().map(Integer::valueOf);
-        }
-
-        if(rule.getRightTradeType().equals(trade.getTradeType())){
-            return rule.getMatchFields().stream()
-                    .filter(e -> e.getMatchingType().equals(MatchField.MANDATORY_AGGREGATE))
-                    .map(e -> trade.getFields().get(e.getRightField())).findFirst().map(Integer::valueOf);
-        }
-
-        return Optional.empty();
+    public List<List<FuzzyTrade>> process(Trade trade, List<FuzzyTrade> fuzzyMatchResult) {
+        return searchSingle(trade, fuzzyMatchResult);
     }
 
-    public List<List<FuzzyTrade>> searchSingle(Trade target, List<FuzzyTrade> list){
+    private List<List<FuzzyTrade>> searchSingle(Trade target, List<FuzzyTrade> list) {
         MatchRule rule = ruleConfigSvc.findMatchRule(target.getTradeType()).get();
 
-        Optional<Integer> resultValue = getAggregateFieldValue(target,rule);
-        if(!resultValue.isPresent())
+        Optional<Integer> resultValue = getAggregateFieldValue(target, rule);
+        if (!resultValue.isPresent())
             return null;
 
         List<List<FuzzyTrade>> results = new ArrayList<>();
         Collections.sort(list, new Comparator<FuzzyTrade>() {
             @Override
             public int compare(FuzzyTrade o1, FuzzyTrade o2) {
-                return getAggregateFieldValue(o1.getTrade(),rule).get() - getAggregateFieldValue(o2.getTrade(),rule).get();
+                return getAggregateFieldValue(o1.getTrade(), rule).get() - getAggregateFieldValue(o2.getTrade(), rule).get();
             }
         });
 
-        searchGroup(resultValue.get(), 0,list,results, new ArrayList<> (), rule);
+        searchGroup(resultValue.get(), 0, list, results, new ArrayList<>(), rule);
         return results;
     }
 
-    public void searchGroup(int result, int index, List<FuzzyTrade> list, List<List<FuzzyTrade>> results, List<FuzzyTrade> resultList, MatchRule rule){
-        if(index + 1 > list.size()){
+    private void searchGroup(int result, int index, List<FuzzyTrade> list, List<List<FuzzyTrade>> results, List<FuzzyTrade> resultList, MatchRule rule) {
+        if (index + 1 > list.size()) {
             return;
         }
-        int flag = sum(resultList,getAggregateFieldValue(list.get(index).getTrade(),rule).get(),result, rule);
-        if(0 == flag){
-            if(index < list.size()){
+        int flag = sum(resultList, getAggregateFieldValue(list.get(index).getTrade(), rule).get(), result, rule);
+        if (0 == flag) {
+            if (index < list.size()) {
                 List<FuzzyTrade> copyList = new ArrayList<>(resultList);
-                searchGroup(result, index + 1, list,results,copyList, rule);
+                searchGroup(result, index + 1, list, results, copyList, rule);
             }
             resultList.add(list.get(index));
             results.add(resultList);
-        }else if (-1 == flag){
+        } else if (-1 == flag) {
             List<FuzzyTrade> copyList = new ArrayList<>(resultList);
             searchGroup(result, index + 1, list, results, copyList, rule);
             resultList.add(list.get(index));
             searchGroup(result, index + 1, list, results, resultList, rule);
-        }else{
+        } else {
             searchGroup(result, index + 1, list, results, resultList, rule);
         }
     }
 
-    public int sum(List<FuzzyTrade> list, int element, int result, MatchRule rule){
+    private int sum(List<FuzzyTrade> list, int element, int result, MatchRule rule) {
         int sum = element;
-        for(FuzzyTrade temp : list){
-            sum += getAggregateFieldValue(temp.getTrade(),rule).get();
+        for (FuzzyTrade temp : list) {
+            sum += getAggregateFieldValue(temp.getTrade(), rule).get();
         }
-        if(sum == result){
+        if (sum == result) {
             return 0;
-        }else{
+        } else {
             return sum > result ? 1 : -1;
         }
+    }
+
+    private Optional<Integer> getAggregateFieldValue(Trade trade, MatchRule rule) {
+        if (rule.getLeftTradeType().equals(trade.getTradeType())) {
+            return rule.getMatchFields().stream()
+                    .filter(e -> e.getMatchingType().equals(MatchField.MANDATORY_AGGREGATE))
+                    .map(e -> trade.getFields().get(e.getLeftField())).findFirst().map(Integer::valueOf);
+        }
+
+        if (rule.getRightTradeType().equals(trade.getTradeType())) {
+            return rule.getMatchFields().stream()
+                    .filter(e -> e.getMatchingType().equals(MatchField.MANDATORY_AGGREGATE))
+                    .map(e -> trade.getFields().get(e.getRightField())).findFirst().map(Integer::valueOf);
+        }
+
+        return Optional.empty();
     }
 }
