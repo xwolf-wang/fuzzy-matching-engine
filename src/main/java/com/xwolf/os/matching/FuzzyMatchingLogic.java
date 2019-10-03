@@ -1,5 +1,6 @@
 package com.xwolf.os.matching;
 
+import com.xwolf.os.domain.FuzzyTrade;
 import com.xwolf.os.domain.MatchField;
 import com.xwolf.os.domain.MatchRule;
 import com.xwolf.os.domain.Trade;
@@ -27,7 +28,7 @@ public class FuzzyMatchingLogic {
     @Autowired
     RuleConfigSvc ruleConfigSvc;
 
-    public Map<Trade, ExtractedResult> process(Trade trade, List<Trade> mandatoryMatchingResult) {
+    public List<FuzzyTrade> process(Trade trade, List<Trade> mandatoryMatchingResult) {
 
         List<String> indexList= new ArrayList<>();
         MatchRule rule = ruleConfigSvc.findMatchRule(trade.getTradeType()).get();
@@ -37,14 +38,18 @@ public class FuzzyMatchingLogic {
 
         List<ExtractedResult> results = FuzzySearch.extractAll(generateMatchIndexByRule(trade,rule),indexList,rule.getCutoffRatio());
 
-        Map<Trade, ExtractedResult> map = new HashMap<>();
+
+        List<FuzzyTrade> fuzzyTradeList = new ArrayList<>();
 
         for(ExtractedResult result: results){
-            map.put(mandatoryMatchingResult.get(result.getIndex()),result);
+            FuzzyTrade fuzzyTrade = new FuzzyTrade();
+            fuzzyTrade.setTrade(mandatoryMatchingResult.get(result.getIndex()));
+            fuzzyTrade.setFuzzyInfo(result);
+            fuzzyTradeList.add(fuzzyTrade);
         }
-        System.out.println(map);
+        System.out.println(fuzzyTradeList);
 
-        return map;
+        return fuzzyTradeList;
     }
 
 

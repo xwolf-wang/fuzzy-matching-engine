@@ -1,5 +1,6 @@
 package com.xwolf.os;
 
+import com.xwolf.os.domain.FuzzyTrade;
 import com.xwolf.os.domain.Trade;
 import com.xwolf.os.matching.AggregationMatchingLogic;
 import com.xwolf.os.matching.FuzzyMatchingLogic;
@@ -44,12 +45,12 @@ public class FuzzyMatchingEngineAppTest {
         System.out.println("mandatoryList is:");
         System.out.println(mandatoryList.size());
 
-        Map<Trade, ExtractedResult> fuzzyResult = fuzzyMatchingLogic.process(trade,mandatoryList);
+        List<FuzzyTrade> fuzzyResult = fuzzyMatchingLogic.process(trade,mandatoryList);
 
-        List<List<Trade>> aggregateResult = aggregationMatchingLogic.process(trade,fuzzyResult);
+        List<List<FuzzyTrade>> aggregateResult = aggregationMatchingLogic.process(trade,fuzzyResult);
 
         int i=1;
-        for(List<Trade> result : aggregateResult){
+        for(List<FuzzyTrade> result : aggregateResult){
             System.out.println("group " + i);
             System.out.println(result);
             i++;
