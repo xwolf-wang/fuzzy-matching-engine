@@ -45,7 +45,7 @@ public class FuzzyMatchingEngineAppTest {
         Trade trade = tradeSvc.getAllTrades().stream().filter(e -> e.getTradeType().equals("fusion_execution")).findFirst().orElse(null);
 
         matchingSvc.process(trade);
-        /*List candidateTrades = tradeSvc.findCandidateTrades(trade.getTradeType());
+        /*List candidateTrades = tradeSvc.findCandidateSideBTrades(trade.getTradeType());
         List mandatoryList = mandatoryMatchingLogic.process(trade, candidateTrades);
         System.out.println(trade);
         System.out.println("mandatoryList is:");

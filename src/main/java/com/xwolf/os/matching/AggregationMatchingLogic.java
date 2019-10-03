@@ -20,8 +20,8 @@ public class AggregationMatchingLogic {
     @Autowired
     RuleConfigSvc ruleConfigSvc;
 
-    public List<List<FuzzyTrade>> process(Trade trade, List<FuzzyTrade> fuzzyMatchResult) {
-        return searchSingle(trade, fuzzyMatchResult);
+    public List<List<FuzzyTrade>> process(Trade tradeSideA, List<FuzzyTrade> tradesSideB) {
+        return searchSingle(tradeSideA, tradesSideB);
     }
 
     private List<List<FuzzyTrade>> searchSingle(Trade target, List<FuzzyTrade> list) {

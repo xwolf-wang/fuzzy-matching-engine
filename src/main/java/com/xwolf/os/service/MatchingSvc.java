@@ -35,24 +35,24 @@ public class MatchingSvc {
     @Autowired
     AverageMatchingLogic averageMatchingLogic;
 
-    public List<List<FuzzyTrade>> process(Trade trade){
+    public List<List<FuzzyTrade>> process(Trade tradeSideA){
 
         //get the other side trade list
-        List<Trade> candidateList = tradeSvc.findCandidateTrades(trade.getTradeType());
+        List<Trade> candidateSideBTrades = tradeSvc.findCandidateSideBTrades(tradeSideA.getTradeType());
 
         //do mandatory match
-        List<Trade> mandatoryMatchingResult = mandatoryMatchingLogic.process(trade,candidateList);
+        List<Trade> mandatoryMatchingResult = mandatoryMatchingLogic.process(tradeSideA,candidateSideBTrades);
 
         //do fuzzy match and show the ratio
-        List<FuzzyTrade> fuzzyMatchResult = fuzzyMatchingLogic.process(trade,mandatoryMatchingResult);
+        List<FuzzyTrade> fuzzyMatchResult = fuzzyMatchingLogic.process(tradeSideA,mandatoryMatchingResult);
 
         //do aggregation
-        List<List<FuzzyTrade>> aggregationMatchResult = aggregationMatchingLogic.process(trade,fuzzyMatchResult);
+        List<List<FuzzyTrade>> aggregationMatchResult = aggregationMatchingLogic.process(tradeSideA,fuzzyMatchResult);
         System.out.println("aggregationMatchResult result: size - " + aggregationMatchResult.size());
         MatchingResultUtil.print(aggregationMatchResult);
 
         //do average calculation
-        List<List<FuzzyTrade>> averageMatchResult = averageMatchingLogic.process(trade,aggregationMatchResult);
+        List<List<FuzzyTrade>> averageMatchResult = averageMatchingLogic.process(tradeSideA,aggregationMatchResult);
         System.out.println("averageMatchingLogic result: size - " + averageMatchResult.size());
         MatchingResultUtil.print(averageMatchResult);
 

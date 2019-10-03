@@ -28,8 +28,6 @@ public class FuzzyMatchingSvc {
 
     public List<List<FuzzyTrade>> match(Trade trade){
 
-        //get the matching rule based on trade type
-
         //populate primary key and save
         tradeSvc.save(trade);
 

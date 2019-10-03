@@ -66,7 +66,7 @@ public class TradeSvc {
     public void save(Trade trade) {
     }
 
-    public List<Trade> findCandidateTrades(String tradeType) {
+    public List<Trade> findCandidateSideBTrades(String tradeType) {
         Optional<String> rule = ruleConfigSvc.findMatchedTradeType(tradeType);
 
         return tradeList.stream().filter(trade -> StringUtils.equals(trade.getTradeType(), rule.get()))

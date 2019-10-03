@@ -25,29 +25,29 @@ public class MandatoryMatchingLogic {
     @Autowired
     RuleConfigSvc ruleConfigSvc;
 
-    public List<Trade> process(Trade trade, List<Trade> candidateList) {
+    public List<Trade> process(Trade tradeSideA, List<Trade> candidateSideBList) {
 
-        return candidateList.stream().filter(e->isMandatoryFieldsMatched(trade, e))
+        return candidateSideBList.stream().filter(e->isMandatoryFieldsMatched(tradeSideA, e))
                 .collect(Collectors.toList());
 
     }
 
-    private boolean isMandatoryFieldsMatched(Trade trade, Trade matched) {
-        MatchRule rule = ruleConfigSvc.findMatchRule(trade.getTradeType()).get();
+    private boolean isMandatoryFieldsMatched(Trade tradeSideA, Trade tradeSideB) {
+        MatchRule rule = ruleConfigSvc.findMatchRule(tradeSideA.getTradeType()).get();
 
-        if(rule.getLeftTradeType().equals(trade.getTradeType()))
+        if(rule.getLeftTradeType().equals(tradeSideA.getTradeType()))
         {
             return rule.getMatchFields().stream()
                     .filter(e -> e.matchingType.equals(MatchField.MANDATORY))
-                    .allMatch(e -> trade.getFields().get(e.getLeftField()).equals(matched.getFields().get(e.getRightField())));
+                    .allMatch(e -> tradeSideA.getFields().get(e.getLeftField()).equals(tradeSideB.getFields().get(e.getRightField())));
 
         }
 
-        if(rule.getRightTradeType().equals(trade.getTradeType()))
+        if(rule.getRightTradeType().equals(tradeSideA.getTradeType()))
         {
             return rule.getMatchFields().stream()
                     .filter(e -> e.matchingType.equals(MatchField.MANDATORY))
-                    .allMatch(e -> trade.getFields().get(e.getRightField()).equals(matched.getFields().get(e.getLeftField())));
+                    .allMatch(e -> tradeSideA.getFields().get(e.getRightField()).equals(tradeSideB.getFields().get(e.getLeftField())));
 
         }
 

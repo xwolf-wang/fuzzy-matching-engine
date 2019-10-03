@@ -2,9 +2,7 @@ package com.xwolf.os;
 
 import com.xwolf.os.service.RuleConfigSvc;
 import com.xwolf.os.service.TradeSvc;
-import org.junit.Rule;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -29,11 +27,11 @@ public class TradeSvcTest {
 
         tradeSvc.setRuleConfigSvc(ruleConfigSvc);
 
-        List fillList = tradeSvc.findCandidateTrades("fusion_execution");
+        List fillList = tradeSvc.findCandidateSideBTrades("fusion_execution");
         System.out.println("fill trade list:");
         System.out.println(fillList);
 
-        List execList = tradeSvc.findCandidateTrades("fusion_fill");
+        List execList = tradeSvc.findCandidateSideBTrades("fusion_fill");
         System.out.println("execuation trade list:");
         System.out.println(execList);
 
