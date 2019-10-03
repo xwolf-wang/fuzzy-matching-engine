@@ -25,4 +25,10 @@ public class CsvUtilTest {
         List list = CsvUtil.readObjectsFromCsv(filepath);
         System.out.println(list);
     }
+
+    @Test
+    public void testUpload(){
+        System.out.println(System.getProperty("user.dir"));
+        System.out.println(CsvUtil.getRootPath());
+    }
 }

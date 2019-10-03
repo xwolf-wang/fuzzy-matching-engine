@@ -26,7 +26,7 @@ public class RuleConfigRestController {
         return "success";
     }
 
-    @PostMapping("/findAll")
+    @GetMapping("/findAll")
     public List<MatchRule> findAllRules(){
         return ruleConfigSvc.findAll();
     }

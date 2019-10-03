@@ -42,15 +42,19 @@ public class TradeSvc {
         return tradeList;
     }
 
-    public Trade saveFromChanel(String chanelName, Map fieldMap) {
-        Optional<String> rule = ruleConfigSvc.findMatchedTradeType(chanelName);
-        Trade trade = TradeConverter.convertMap2Trade(fieldMap, chanelName, ruleConfigSvc.findPrimaryKeyName(chanelName));
-        tradeList.add(trade);
-        return trade;
+    public Trade save(String chanelName, Map<String, String> fieldMap) {
+        List<Map<String,String>> trades = new ArrayList<>();
+        trades.add(fieldMap);
+        return save(chanelName,trades).stream().findFirst().orElse(null);
+
     }
 
-    public List<Trade> findTradesByTradeTypeAndKey(String chanelName, String primaryKey) {
-        return tradeList;
+    public Trade findTradesByTradeTypeAndKey(String chanelName, String primaryKey) {
+        String uuid = chanelName + "_" + primaryKey;
+        Optional<Trade> trade = tradeList.stream().filter(e -> e.getUuid().equals(uuid))
+                .findFirst();
+
+        return trade.orElse(null);
     }
 
     public void deletAll() {
@@ -71,5 +75,16 @@ public class TradeSvc {
 
     public void addAll(List<Trade> trades){
         tradeList.addAll(trades);
+    }
+
+    public List<Trade> save(String chanelName, List<Map<String, String>> mapList) {
+        Optional<String> rule = ruleConfigSvc.findMatchedTradeType(chanelName);
+        String primaryKey = ruleConfigSvc.findPrimaryKeyName(chanelName);
+        List<Trade> trades = mapList.stream().map(e -> TradeConverter.convertMap2Trade(e, chanelName, primaryKey))
+                .collect(Collectors.toList());
+
+        tradeList.addAll(trades);
+
+        return trades;
     }
 }

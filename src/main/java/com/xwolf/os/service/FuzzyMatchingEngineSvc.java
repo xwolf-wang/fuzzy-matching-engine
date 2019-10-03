@@ -30,13 +30,13 @@ public class FuzzyMatchingEngineSvc {
 
 
     public String match(String tradeType, Map fieldMap) {
-        Trade trade = tradeSvc.saveFromChanel(tradeType,fieldMap);
+        Trade trade = tradeSvc.save(tradeType,fieldMap);
         List<List<FuzzyTrade>> response = match(trade);
         return MatchingResultUtil.print(response);
     }
 
     public String view(String chanelName, String primaryKey) {
-        Trade trade = tradeSvc.findTradesByTradeTypeAndKey(chanelName,primaryKey).stream().findFirst().orElse(null);
+        Trade trade = tradeSvc.findTradesByTradeTypeAndKey(chanelName,primaryKey);
         List<List<FuzzyTrade>> response = match(trade);
         return MatchingResultUtil.print(response);
     }
