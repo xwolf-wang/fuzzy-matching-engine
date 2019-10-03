@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -30,18 +28,18 @@ public class FuzzyMatchingLogic {
 
     public List<FuzzyTrade> process(Trade trade, List<Trade> mandatoryMatchingResult) {
 
-        List<String> indexList= new ArrayList<>();
+        List<String> indexList = new ArrayList<>();
         MatchRule rule = ruleConfigSvc.findMatchRule(trade.getTradeType()).get();
-        for(Trade trd : mandatoryMatchingResult){
-            indexList.add(generateMatchIndexByRule(trd,rule));
+        for (Trade trd : mandatoryMatchingResult) {
+            indexList.add(generateMatchIndexByRule(trd, rule));
         }
 
-        List<ExtractedResult> results = FuzzySearch.extractAll(generateMatchIndexByRule(trade,rule),indexList,rule.getCutoffRatio());
+        List<ExtractedResult> results = FuzzySearch.extractAll(generateMatchIndexByRule(trade, rule), indexList, rule.getCutoffRatio());
 
 
         List<FuzzyTrade> fuzzyTradeList = new ArrayList<>();
 
-        for(ExtractedResult result: results){
+        for (ExtractedResult result : results) {
             FuzzyTrade fuzzyTrade = new FuzzyTrade();
             fuzzyTrade.setTrade(mandatoryMatchingResult.get(result.getIndex()));
             fuzzyTrade.setFuzzyInfo(result);
@@ -51,7 +49,6 @@ public class FuzzyMatchingLogic {
 
         return fuzzyTradeList;
     }
-
 
 
     private String generateMatchIndexByRule(Trade trade, MatchRule rule) {
