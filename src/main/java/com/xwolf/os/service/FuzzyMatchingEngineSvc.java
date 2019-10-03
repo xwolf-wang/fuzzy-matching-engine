@@ -1,10 +1,12 @@
 package com.xwolf.os.service;
 
 import com.xwolf.os.domain.*;
+import com.xwolf.os.utils.MatchingResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author ming
@@ -12,7 +14,7 @@ import java.util.List;
  * @create 2019-09-13 10:14 PM
  **/
 @Service
-public class FuzzyMatchingSvc {
+public class FuzzyMatchingEngineSvc {
 
 
     @Autowired
@@ -20,11 +22,6 @@ public class FuzzyMatchingSvc {
 
     @Autowired
     private MatchingSvc matchingSvc;
-
-
-
-
-
 
     public List<List<FuzzyTrade>> match(Trade trade){
 
@@ -37,4 +34,9 @@ public class FuzzyMatchingSvc {
     }
 
 
+    public String match(String tradeType, Map fieldMap) {
+        Trade trade = tradeSvc.saveFromChanel(tradeType,fieldMap);
+        List<List<FuzzyTrade>> response = matchingSvc.process(trade);
+        return MatchingResultUtil.print(response);
+    }
 }

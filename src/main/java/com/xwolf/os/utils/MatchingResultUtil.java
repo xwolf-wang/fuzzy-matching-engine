@@ -10,12 +10,17 @@ import java.util.List;
  * @create 2019-10-03 9:19 AM
  **/
 public class MatchingResultUtil {
-    public static void print(List<List<FuzzyTrade>> aggregateResult){
+    public static String print(List<List<FuzzyTrade>> aggregateResult){
+        StringBuffer sb = new StringBuffer();
         int i=1;
+        sb.append("Fuzzy Matching result group size: " + aggregateResult.size() + "\n");
         for(List<FuzzyTrade> result : aggregateResult){
-            System.out.println("group " + i);
-            System.out.println(result);
+            sb.append("group : " + i + " \n");
+            sb.append("------- \n");
+            sb.append(result + "\n");
             i++;
         }
+
+        return sb.toString();
     }
 }

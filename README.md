@@ -64,7 +64,11 @@ fusion_fill.csv
      }
 
 3. sample trade
+fill
 {"oraderId":"1102944","quantity":"1","tradePrice":"105.01","firm":"fxaa","cust":"3m","user":"ming","exec":"NAS"}
+
+execution
+{"tradeId":"2102944","qty":"8","trdPrice":"100.01","firm":"fxaa","customer":"3m","user":"ming","execBy":"NAS"}
 
 #### 参与贡献
 

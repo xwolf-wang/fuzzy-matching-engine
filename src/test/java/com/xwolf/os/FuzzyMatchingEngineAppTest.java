@@ -35,7 +35,7 @@ public class FuzzyMatchingEngineAppTest {
     @Test
     public void contextLoads() {
         Trade trade = tradeSvc.getAllTrades().stream().filter(e -> e.getTradeType().equals("fusion_execution")).findFirst().orElse(null);
-
+        System.out.println(trade);
         matchingSvc.process(trade);
         /*List candidateTrades = tradeSvc.findCandidateSideBTrades(trade.getTradeType());
         List mandatoryList = mandatoryMatchingLogic.process(trade, candidateTrades);
