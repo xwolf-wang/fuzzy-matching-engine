@@ -27,8 +27,6 @@ public class FuzzyMatchingLogic {
     @Autowired
     RuleConfigSvc ruleConfigSvc;
 
-    public static Integer cutoff = 90;
-
     public Map<Trade, ExtractedResult> process(Trade trade, List<Trade> mandatoryMatchingResult) {
 
         List<String> indexList= new ArrayList<>();
@@ -37,7 +35,7 @@ public class FuzzyMatchingLogic {
             indexList.add(generateMatchIndexByRule(trd,rule));
         }
 
-        List<ExtractedResult> results = FuzzySearch.extractAll(generateMatchIndexByRule(trade,rule),indexList,cutoff);
+        List<ExtractedResult> results = FuzzySearch.extractAll(generateMatchIndexByRule(trade,rule),indexList,rule.getCutoffRatio());
 
         Map<Trade, ExtractedResult> map = new HashMap<>();
 
