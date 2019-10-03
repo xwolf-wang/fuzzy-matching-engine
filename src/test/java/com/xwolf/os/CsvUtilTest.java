@@ -20,7 +20,7 @@ public class CsvUtilTest {
 
     @Test
     public void test() throws IOException {
-        String filepath = "/Users/ming/IdeaProjects/fuzzy-matching-engine/target/test-classes/fusion_fill.csv";
+        String filepath = "./target/test-classes/fusion_fill.csv";
 
         List list = CsvUtil.readObjectsFromCsv(filepath);
         System.out.println(list);

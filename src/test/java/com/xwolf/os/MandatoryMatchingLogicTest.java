@@ -14,23 +14,19 @@ public class MandatoryMatchingLogicTest {
 
     MandatoryMatchingLogic mandatoryMatchingLogic = new MandatoryMatchingLogic();
 
-    private void init(){
+
+    @Test
+    public void process(){
         TradeSvc tradeSvc = new TradeSvc();
-        tradeSvc.init();
+        TestUtils.init_trades(tradeSvc);
         System.out.println("all trade list:");
         System.out.println(tradeSvc.getAllTrades());
 
 
         RuleConfigSvc ruleConfigSvc = new RuleConfigSvc();
-        ruleConfigSvc.init();
-
+        TestUtils.init_rule(ruleConfigSvc);
         tradeSvc.setRuleConfigSvc(ruleConfigSvc);
 
         mandatoryMatchingLogic.setRuleConfigSvc(ruleConfigSvc);
-    }
-
-    @Test
-    public void process(){
-
     }
 }

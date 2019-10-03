@@ -1,11 +1,13 @@
 package com.xwolf.os.controller;
 
+import com.xwolf.os.domain.Trade;
 import com.xwolf.os.service.FuzzyMatchingEngineSvc;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,14 +21,31 @@ public class MatchingRestController {
     @Autowired
     FuzzyMatchingEngineSvc fuzzyMatchingEngineSvc;
 
-    @PostMapping("chanel_fusion_fill")
+    @PostMapping("/chanel/{chanelName}")
+    public String chanel1(@ApiParam(defaultValue = "fusion_fill",required=true) @PathVariable String chanelName,
+                          @RequestBody Map fieldMap) {
+        return fuzzyMatchingEngineSvc.match(chanelName, fieldMap);
+
+    }
+
+    @GetMapping("/view/{chanelName}/{primaryKey}")
+    public String view(@PathVariable String chanelName,
+                          @PathVariable String primaryKey) {
+        return fuzzyMatchingEngineSvc.view(chanelName, primaryKey);
+
+    }
+
+
+/*    @PostMapping("/chanel_fusion_fill")
     public String chanel1(@RequestBody Map fieldMap) {
         return fuzzyMatchingEngineSvc.match("fusion_fill", fieldMap);
 
     }
 
-    @PostMapping("chanel_fusion_execution")
+    @PostMapping("/chanel_fusion_execution")
     public String chanel2(@RequestBody Map fieldMap) {
         return fuzzyMatchingEngineSvc.match("fusion_execution", fieldMap);
-    }
+    }*/
+
+
 }

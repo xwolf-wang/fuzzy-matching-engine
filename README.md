@@ -63,9 +63,21 @@ fusion_fill.csv
        ]
      }
 
+
+
 3. sample trade
 fill
 {"oraderId":"1102944","quantity":"1","tradePrice":"105.01","firm":"fxaa","cust":"3m","user":"ming","exec":"NAS"}
+{"oraderId":"1102944","quantity":"1","tradePrice":"100.01","firm":"fxaa","cust":"3m","user":"ming","exec":"NAS"}
+{"oraderId":"1102944","quantity":"2","tradePrice":"100.001","firm":"fxaa","cust":"3m","user":"ming3","exec":"NAS"}
+{"oraderId":"1102944","quantity":"2","tradePrice":"100.03","firm":"fxaa","cust":"3m","user":"ming456","exec":"NAS234"}
+{"oraderId":"1102944","quantity":"3","tradePrice":"99.9999","firm":"fxaa","cust":"3m","user":"ming","exec":"NAS2"}
+{"oraderId":"1102944","quantity":"4","tradePrice":"100.01","firm":"fxaa","cust":"3m","user":"ming","exec":"NAS"}
+{"oraderId":"1102944","quantity":"5","tradePrice":"100.01","firm":"fxaa","cust":"3m","user":"ming","exec":"NAS"}
+{"oraderId":"1102944","quantity":"6","tradePrice":"100.01","firm":"fxaa","cust":"3m","user":"ming","exec":"NAS"}
+{"oraderId":"1102944","quantity":"7","tradePrice":"100.01","firm":"fxaa","cust":"3m","user":"ming","exec":"NAS"}
+{"oraderId":"1102944","quantity":"8","tradePrice":"100.01","firm":"fxaa","cust":"3m","user":"ming","exec":"NAS"}
+{"oraderId":"1102944","quantity":"10","tradePrice":"100.01","firm":"fxaa","cust":"3m","user":"ming","exec":"NAS"}
 
 execution
 {"tradeId":"2102944","qty":"8","trdPrice":"100.01","firm":"fxaa","customer":"3m","user":"ming","execBy":"NAS"}

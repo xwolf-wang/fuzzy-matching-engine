@@ -17,13 +17,12 @@ public class TradeSvcTest {
     @Test
     public void tes(){
         TradeSvc tradeSvc = new TradeSvc();
-        tradeSvc.init();
+        TestUtils.init_trades(tradeSvc);
         System.out.println("all trade list:");
         System.out.println(tradeSvc.getAllTrades());
 
-
         RuleConfigSvc ruleConfigSvc = new RuleConfigSvc();
-        ruleConfigSvc.init();
+        TestUtils.init_rule(ruleConfigSvc);
 
         tradeSvc.setRuleConfigSvc(ruleConfigSvc);
 
