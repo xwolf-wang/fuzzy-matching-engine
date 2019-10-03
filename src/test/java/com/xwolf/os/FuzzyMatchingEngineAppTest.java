@@ -25,14 +25,6 @@ import java.util.Map;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class FuzzyMatchingEngineAppTest {
-    @Autowired
-    MandatoryMatchingLogic mandatoryMatchingLogic;
-
-    @Autowired
-    FuzzyMatchingLogic fuzzyMatchingLogic;
-
-    @Autowired
-    AggregationMatchingLogic aggregationMatchingLogic;
 
     @Autowired
     MatchingSvc matchingSvc;

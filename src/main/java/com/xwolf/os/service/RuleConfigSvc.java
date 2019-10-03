@@ -2,6 +2,7 @@ package com.xwolf.os.service;
 
 import com.xwolf.os.domain.MatchField;
 import com.xwolf.os.domain.MatchRule;
+import com.xwolf.os.utils.EngineConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -27,19 +28,25 @@ public class RuleConfigSvc {
     @PostConstruct
     public void init(){
         MatchRule rule = new MatchRule();
+        rule.setRuleName("fusionRule");
         rule.setLeftTradeType("fusion_fill");
         rule.setLeftPrimaryKey("oraderId");
         rule.setRightTradeType("fusion_execution");
         rule.setRightPrimaryKey("tradeId");
         rule.setCutoffRatio(90);
         rule.setAvgPrecision(0.2);
-        rule.getMatchFields().add(new MatchField("tradePrice","trdPrice", AVG));
-        rule.getMatchFields().add(new MatchField("quantity","qty", MANDATORY_AGGREGATE));
-        rule.getMatchFields().add(new MatchField("firm", "firm", MANDATORY));
-        rule.getMatchFields().add(new MatchField("cust", "customer", MANDATORY));
-        rule.getMatchFields().add(new MatchField("user", "user", FUZZY));
-        rule.getMatchFields().add(new MatchField("exec", "execBy",FUZZY));
+        rule.getMatchFields().add(new MatchField("tradePrice","trdPrice", EngineConstants.AVG));
+        rule.getMatchFields().add(new MatchField("quantity","qty", EngineConstants.MANDATORY_AGGREGATE));
+        rule.getMatchFields().add(new MatchField("firm", "firm", EngineConstants.MANDATORY));
+        rule.getMatchFields().add(new MatchField("cust", "customer", EngineConstants.MANDATORY));
+        rule.getMatchFields().add(new MatchField("user", "user", EngineConstants.FUZZY));
+        rule.getMatchFields().add(new MatchField("exec", "execBy",EngineConstants.FUZZY));
 
+        System.out.println(rule);
+        rules.add(rule);
+    }
+
+    public void saveRule(MatchRule rule){
         rules.add(rule);
     }
 
@@ -73,5 +80,20 @@ public class RuleConfigSvc {
             return true;
 
         return false;
+    }
+
+    public List<MatchRule> findAll() {
+        return rules;
+    }
+
+    public String findPrimaryKeyName(String tradeType) {
+        MatchRule rule =  findMatchRule(tradeType).get();
+        if(rule.getLeftTradeType().equals(tradeType))
+            return rule.getLeftPrimaryKey();
+
+        if(rule.getRightTradeType().equals(tradeType))
+            return rule.getRightPrimaryKey();
+
+        return null;
     }
 }

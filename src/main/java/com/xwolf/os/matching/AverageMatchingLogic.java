@@ -5,6 +5,7 @@ import com.xwolf.os.domain.MatchField;
 import com.xwolf.os.domain.MatchRule;
 import com.xwolf.os.domain.Trade;
 import com.xwolf.os.service.RuleConfigSvc;
+import com.xwolf.os.utils.EngineConstants;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -48,13 +49,13 @@ public class AverageMatchingLogic {
     private Optional<Double> getAverageFieldValue(Trade trade, MatchRule rule) {
         if (rule.getLeftTradeType().equals(trade.getTradeType())) {
             return rule.getMatchFields().stream()
-                    .filter(e -> e.getMatchingType().equals(MatchField.AVG))
+                    .filter(e -> e.getMatchingType().equals(EngineConstants.AVG))
                     .map(e -> trade.getFields().get(e.getLeftField())).findFirst().map(Double::valueOf);
         }
 
         if (rule.getRightTradeType().equals(trade.getTradeType())) {
             return rule.getMatchFields().stream()
-                    .filter(e -> e.getMatchingType().equals(MatchField.AVG))
+                    .filter(e -> e.getMatchingType().equals(EngineConstants.AVG))
                     .map(e -> trade.getFields().get(e.getRightField())).findFirst().map(Double::valueOf);
         }
 

@@ -4,6 +4,7 @@ import com.xwolf.os.domain.MatchField;
 import com.xwolf.os.domain.MatchRule;
 import com.xwolf.os.domain.Trade;
 import com.xwolf.os.service.RuleConfigSvc;
+import com.xwolf.os.utils.EngineConstants;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -38,7 +39,7 @@ public class MandatoryMatchingLogic {
         if(rule.getLeftTradeType().equals(tradeSideA.getTradeType()))
         {
             return rule.getMatchFields().stream()
-                    .filter(e -> e.matchingType.equals(MatchField.MANDATORY))
+                    .filter(e -> e.matchingType.equals(EngineConstants.MANDATORY))
                     .allMatch(e -> tradeSideA.getFields().get(e.getLeftField()).equals(tradeSideB.getFields().get(e.getRightField())));
 
         }
@@ -46,7 +47,7 @@ public class MandatoryMatchingLogic {
         if(rule.getRightTradeType().equals(tradeSideA.getTradeType()))
         {
             return rule.getMatchFields().stream()
-                    .filter(e -> e.matchingType.equals(MatchField.MANDATORY))
+                    .filter(e -> e.matchingType.equals(EngineConstants.MANDATORY))
                     .allMatch(e -> tradeSideA.getFields().get(e.getRightField()).equals(tradeSideB.getFields().get(e.getLeftField())));
 
         }

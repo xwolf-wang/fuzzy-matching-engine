@@ -5,6 +5,7 @@ import com.xwolf.os.domain.MatchField;
 import com.xwolf.os.domain.MatchRule;
 import com.xwolf.os.domain.Trade;
 import com.xwolf.os.service.RuleConfigSvc;
+import com.xwolf.os.utils.EngineConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -80,13 +81,13 @@ public class AggregationMatchingLogic {
     private Optional<Integer> getAggregateFieldValue(Trade trade, MatchRule rule) {
         if (rule.getLeftTradeType().equals(trade.getTradeType())) {
             return rule.getMatchFields().stream()
-                    .filter(e -> e.getMatchingType().equals(MatchField.MANDATORY_AGGREGATE))
+                    .filter(e -> e.getMatchingType().equals(EngineConstants.MANDATORY_AGGREGATE))
                     .map(e -> trade.getFields().get(e.getLeftField())).findFirst().map(Integer::valueOf);
         }
 
         if (rule.getRightTradeType().equals(trade.getTradeType())) {
             return rule.getMatchFields().stream()
-                    .filter(e -> e.getMatchingType().equals(MatchField.MANDATORY_AGGREGATE))
+                    .filter(e -> e.getMatchingType().equals(EngineConstants.MANDATORY_AGGREGATE))
                     .map(e -> trade.getFields().get(e.getRightField())).findFirst().map(Integer::valueOf);
         }
 

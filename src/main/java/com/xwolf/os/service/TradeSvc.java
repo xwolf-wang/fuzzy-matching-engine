@@ -77,4 +77,9 @@ public class TradeSvc {
     public List<Trade> getAllTrades(){
         return tradeList;
     }
+
+    public void saveFromChanel(String chanelName, Map fieldMap) {
+        Optional<String> rule = ruleConfigSvc.findMatchedTradeType(chanelName);
+        tradeList.add(convertMap2Trade(fieldMap,chanelName,ruleConfigSvc.findPrimaryKeyName(chanelName)));
+    }
 }

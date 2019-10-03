@@ -5,6 +5,7 @@ import com.xwolf.os.domain.MatchField;
 import com.xwolf.os.domain.MatchRule;
 import com.xwolf.os.domain.Trade;
 import com.xwolf.os.service.RuleConfigSvc;
+import com.xwolf.os.utils.EngineConstants;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 import me.xdrop.fuzzywuzzy.model.ExtractedResult;
 import org.apache.commons.lang3.StringUtils;
@@ -71,13 +72,13 @@ public class FuzzyMatchingLogic {
 
     private boolean isMatchedRightField(String fieldName, MatchRule rule) {
         return rule.getMatchFields().stream()
-                .filter(e -> e.getMatchingType().equals(MatchField.FUZZY))
+                .filter(e -> e.getMatchingType().equals(EngineConstants.FUZZY))
                 .anyMatch(e -> StringUtils.equals(fieldName, e.getRightField()));
     }
 
     private boolean isMatchedLeftField(String fieldName, MatchRule rule) {
         return rule.getMatchFields().stream()
-                .filter(e -> e.getMatchingType().equals(MatchField.FUZZY))
+                .filter(e -> e.getMatchingType().equals(EngineConstants.FUZZY))
                 .anyMatch(e -> StringUtils.equals(fieldName, e.getLeftField()));
     }
 }

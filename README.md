@@ -15,9 +15,56 @@
 
 #### 使用说明
 
-1. xxxx
-2. xxxx
-3. xxxx
+1. Trade list
+fusion_execution.csv
+fusion_fill.csv
+
+2. Rule json
+------------
+   {
+       "ruleName": "fusionRule",
+       "leftTradeType": "fusion_fill",
+       "leftPrimaryKey": "oraderId",
+       "rightTradeType": "fusion_execution",
+       "rightPrimaryKey": "tradeId",
+       "cutoffRatio": 90,
+       "avgPrecision": 0.2,
+       "matchFields": [
+         {
+           "leftField": "tradePrice",
+           "rightField": "trdPrice",
+           "matchingType": "avg"
+         },
+         {
+           "leftField": "quantity",
+           "rightField": "qty",
+           "matchingType": "mandatory_aggregate"
+         },
+         {
+           "leftField": "firm",
+           "rightField": "firm",
+           "matchingType": "mandatory"
+         },
+         {
+           "leftField": "cust",
+           "rightField": "customer",
+           "matchingType": "mandatory"
+         },
+         {
+           "leftField": "user",
+           "rightField": "user",
+           "matchingType": "fuzzy"
+         },
+         {
+           "leftField": "exec",
+           "rightField": "execBy",
+           "matchingType": "fuzzy"
+         }
+       ]
+     }
+
+3. sample trade
+{"oraderId":"1102944","quantity":"1","tradePrice":"105.01","firm":"fxaa","cust":"3m","user":"ming","exec":"NAS"}
 
 #### 参与贡献
 
