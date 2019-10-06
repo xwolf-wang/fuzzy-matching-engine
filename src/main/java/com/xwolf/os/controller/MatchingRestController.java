@@ -36,16 +36,4 @@ public class MatchingRestController {
     }
 
 
-/*    @PostMapping("/channel_fusion_fill")
-    public String channel1(@RequestBody Map fieldMap) {
-        return fuzzyMatchingEngineSvc.match("fusion_fill", fieldMap);
-
-    }
-
-    @PostMapping("/channel_fusion_execution")
-    public String channel2(@RequestBody Map fieldMap) {
-        return fuzzyMatchingEngineSvc.match("fusion_execution", fieldMap);
-    }*/
-
-
 }
