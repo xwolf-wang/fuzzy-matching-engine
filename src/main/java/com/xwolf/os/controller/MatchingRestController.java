@@ -21,29 +21,29 @@ public class MatchingRestController {
     @Autowired
     FuzzyMatchingEngineSvc fuzzyMatchingEngineSvc;
 
-    @PostMapping("/chanel/{chanelName}")
-    public String chanel1(@ApiParam(defaultValue = "fusion_fill",required=true) @PathVariable String chanelName,
+    @PostMapping("/channel/{channelName}")
+    public String channel1(@ApiParam(defaultValue = "fusion_fill",required=true) @PathVariable String channelName,
                           @RequestBody Map fieldMap) {
-        return fuzzyMatchingEngineSvc.match(chanelName, fieldMap);
+        return fuzzyMatchingEngineSvc.match(channelName, fieldMap);
 
     }
 
-    @GetMapping("/view/{chanelName}/{primaryKey}")
-    public String view(@PathVariable String chanelName,
+    @GetMapping("/view/{channelName}/{primaryKey}")
+    public String view(@PathVariable String channelName,
                           @PathVariable String primaryKey) {
-        return fuzzyMatchingEngineSvc.view(chanelName, primaryKey);
+        return fuzzyMatchingEngineSvc.view(channelName, primaryKey);
 
     }
 
 
-/*    @PostMapping("/chanel_fusion_fill")
-    public String chanel1(@RequestBody Map fieldMap) {
+/*    @PostMapping("/channel_fusion_fill")
+    public String channel1(@RequestBody Map fieldMap) {
         return fuzzyMatchingEngineSvc.match("fusion_fill", fieldMap);
 
     }
 
-    @PostMapping("/chanel_fusion_execution")
-    public String chanel2(@RequestBody Map fieldMap) {
+    @PostMapping("/channel_fusion_execution")
+    public String channel2(@RequestBody Map fieldMap) {
         return fuzzyMatchingEngineSvc.match("fusion_execution", fieldMap);
     }*/
 

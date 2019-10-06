@@ -26,8 +26,8 @@ public class TradeRestController {
     TradeSvc tradeSvc;
 
     @GetMapping("/view")
-    public Trade viewByChanel(@RequestParam String chanelName, @RequestParam String primaryKey) {
-        return tradeSvc.findTradesByTradeTypeAndKey(chanelName, primaryKey);
+    public Trade viewBychannel(@RequestParam String channelName, @RequestParam String primaryKey) {
+        return tradeSvc.findTradesByTradeTypeAndKey(channelName, primaryKey);
     }
 
     @GetMapping("/viewAll")
@@ -35,9 +35,9 @@ public class TradeRestController {
         return tradeSvc.getAllTrades();
     }
 
-    @PostMapping("/deleteByChanelNameAndKey")
-    public Trade delete(@RequestParam String chanelName, @RequestParam String primaryKey) {
-        return tradeSvc.delete(chanelName, primaryKey);
+    @PostMapping("/deleteBychannelNameAndKey")
+    public Trade delete(@RequestParam String channelName, @RequestParam String primaryKey) {
+        return tradeSvc.delete(channelName, primaryKey);
     }
 
     @PostMapping("/deleteByUUID")
@@ -51,8 +51,8 @@ public class TradeRestController {
         return "success";
     }
 
-    @PostMapping("/upload/{chanelName}")
-    public String upload(@PathVariable String chanelName,
+    @PostMapping("/upload/{channelName}")
+    public String upload(@PathVariable String channelName,
                          @RequestParam("file") MultipartFile file, HttpServletRequest request) {
 
         if (file == null) {
@@ -60,7 +60,7 @@ public class TradeRestController {
         }
         try {
             List<Map<String, String>> mapList = CsvUtil.readObjectsFromMultiFile(file);
-            tradeSvc.save(chanelName, mapList);
+            tradeSvc.save(channelName, mapList);
             return "success";
         } catch (IOException e) {
             e.printStackTrace();

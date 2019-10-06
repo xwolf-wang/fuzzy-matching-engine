@@ -42,15 +42,15 @@ public class TradeSvc {
         return tradeList;
     }
 
-    public Trade save(String chanelName, Map<String, String> fieldMap) {
+    public Trade save(String channelName, Map<String, String> fieldMap) {
         List<Map<String,String>> trades = new ArrayList<>();
         trades.add(fieldMap);
-        return save(chanelName,trades).stream().findFirst().orElse(null);
+        return save(channelName,trades).stream().findFirst().orElse(null);
 
     }
 
-    public Trade findTradesByTradeTypeAndKey(String chanelName, String primaryKey) {
-        String uuid = chanelName + "_" + primaryKey;
+    public Trade findTradesByTradeTypeAndKey(String channelName, String primaryKey) {
+        String uuid = channelName + "_" + primaryKey;
         Optional<Trade> trade = tradeList.stream().filter(e -> e.getUuid().equals(uuid))
                 .findFirst();
 
@@ -61,8 +61,8 @@ public class TradeSvc {
         tradeList.clear();
     }
 
-    public Trade delete(String chanelName, String primaryKey) {
-        String uuid = chanelName + "_" + primaryKey;
+    public Trade delete(String channelName, String primaryKey) {
+        String uuid = channelName + "_" + primaryKey;
         return delete(uuid);
     }
 
@@ -77,10 +77,10 @@ public class TradeSvc {
         tradeList.addAll(trades);
     }
 
-    public List<Trade> save(String chanelName, List<Map<String, String>> mapList) {
-        Optional<String> rule = ruleConfigSvc.findMatchedTradeType(chanelName);
-        String primaryKey = ruleConfigSvc.findPrimaryKeyName(chanelName);
-        List<Trade> trades = mapList.stream().map(e -> TradeConverter.convertMap2Trade(e, chanelName, primaryKey))
+    public List<Trade> save(String channelName, List<Map<String, String>> mapList) {
+        Optional<String> rule = ruleConfigSvc.findMatchedTradeType(channelName);
+        String primaryKey = ruleConfigSvc.findPrimaryKeyName(channelName);
+        List<Trade> trades = mapList.stream().map(e -> TradeConverter.convertMap2Trade(e, channelName, primaryKey))
                 .collect(Collectors.toList());
 
         tradeList.addAll(trades);

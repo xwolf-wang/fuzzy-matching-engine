@@ -23,9 +23,9 @@ public class TestUtils {
     public static void init_rule(RuleConfigSvc ruleConfigSvc) {
         MatchRule rule = new MatchRule();
         rule.setRuleName("fusionRule");
-        rule.setLeftTradeType("fusion_fill");
+        rule.setLeftTradeType("channel1");
         rule.setLeftPrimaryKey("oraderId");
-        rule.setRightTradeType("fusion_execution");
+        rule.setRightTradeType("channel2");
         rule.setRightPrimaryKey("tradeId");
         rule.setCutoffRatio(90);
         rule.setAvgPrecision(0.2);
@@ -41,7 +41,7 @@ public class TestUtils {
     }
 
     public static void init_trades(TradeSvc tradeSvc){
-        String filepath = "./target/test-classes/fusion_fill.csv";
+        String filepath = "./src/test/resources/channel1.csv";
 
         List<Map<String, String>> list = null;
         try {
@@ -49,9 +49,9 @@ public class TestUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        tradeSvc.addAll(list.stream().map(e -> TradeConverter.convertMap2Trade(e, "fusion_fill", "oraderId")).collect(Collectors.toList()));
+        tradeSvc.addAll(list.stream().map(e -> TradeConverter.convertMap2Trade(e, "channel1", "oraderId")).collect(Collectors.toList()));
 
-        filepath = "./target/test-classes/fusion_execution.csv";
+        filepath = "./src/test/resources/channel2.csv";
 
         List<Map<String, String>> execlist = null;
         try {
@@ -59,7 +59,7 @@ public class TestUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        tradeSvc.addAll(execlist.stream().map(e -> TradeConverter.convertMap2Trade(e, "fusion_execution", "tradeId")).collect(Collectors.toList()));
+        tradeSvc.addAll(execlist.stream().map(e -> TradeConverter.convertMap2Trade(e, "channel2", "tradeId")).collect(Collectors.toList()));
 
     }
 }

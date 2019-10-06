@@ -45,25 +45,9 @@ public class FuzzyMatchingEngineAppTest {
         TestUtils.init_rule(ruleConfigSvc);
         TestUtils.init_trades(tradeSvc);
 
-        Trade trade = tradeSvc.getAllTrades().stream().filter(e -> e.getTradeType().equals("fusion_execution")).findFirst().orElse(null);
+        Trade trade = tradeSvc.getAllTrades().stream().filter(e -> e.getTradeType().equals("channel2")).findFirst().orElse(null);
         System.out.println(trade);
         matchingSvc.process(trade);
-        /*List candidateTrades = tradeSvc.findCandidateSideBTrades(trade.getTradeType());
-        List mandatoryList = mandatoryMatchingLogic.process(trade, candidateTrades);
-        System.out.println(trade);
-        System.out.println("mandatoryList is:");
-        System.out.println(mandatoryList.size());
-
-        List<FuzzyTrade> fuzzyResult = fuzzyMatchingLogic.process(trade,mandatoryList);
-
-        List<List<FuzzyTrade>> aggregateResult = aggregationMatchingLogic.process(trade,fuzzyResult);
-
-        int i=1;
-        for(List<FuzzyTrade> result : aggregateResult){
-            System.out.println("group " + i);
-            System.out.println(result);
-            i++;
-        }*/
 
 
     }

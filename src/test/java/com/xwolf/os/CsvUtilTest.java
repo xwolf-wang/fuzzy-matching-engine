@@ -20,7 +20,7 @@ public class CsvUtilTest {
 
     @Test
     public void test() throws IOException {
-        String filepath = "./target/test-classes/fusion_fill.csv";
+        String filepath = "./src/test/resources/channel1.csv";
 
         List list = CsvUtil.readObjectsFromCsv(filepath);
         System.out.println(list);

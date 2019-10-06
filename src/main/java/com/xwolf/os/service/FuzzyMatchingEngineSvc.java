@@ -35,8 +35,8 @@ public class FuzzyMatchingEngineSvc {
         return MatchingResultUtil.print(response);
     }
 
-    public String view(String chanelName, String primaryKey) {
-        Trade trade = tradeSvc.findTradesByTradeTypeAndKey(chanelName,primaryKey);
+    public String view(String channelName, String primaryKey) {
+        Trade trade = tradeSvc.findTradesByTradeTypeAndKey(channelName,primaryKey);
         List<List<FuzzyTrade>> response = match(trade);
         return MatchingResultUtil.print(response);
     }
