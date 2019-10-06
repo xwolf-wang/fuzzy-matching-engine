@@ -13,7 +13,7 @@ import me.xdrop.fuzzywuzzy.model.ExtractedResult;
 @Data
 public class FuzzyTrade {
     private Trade trade;
-    private ExtractedResult fuzzyInfo;
+    private ExtractedResult fuzzyMatchInfo;
 
     @Override
     public String toString() {

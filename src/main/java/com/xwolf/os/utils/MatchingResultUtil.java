@@ -13,11 +13,11 @@ public class MatchingResultUtil {
     public static String print(List<List<FuzzyTrade>> aggregateResult){
         StringBuffer sb = new StringBuffer();
         int i=1;
-        sb.append("Fuzzy Matching result group size: " + aggregateResult.size() + "\n");
+        sb.append("Matching result group size: " + aggregateResult.size() + "\n");
         for(List<FuzzyTrade> result : aggregateResult){
             sb.append("group : " + i + " \n");
             sb.append("------- \n");
-            sb.append(result + "\n");
+            result.stream().forEach(e -> sb.append(e + "\n"));
             i++;
         }
 

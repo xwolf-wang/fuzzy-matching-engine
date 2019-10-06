@@ -53,8 +53,6 @@ public class MatchingSvc {
 
         //do average calculation
         List<List<FuzzyTrade>> averageMatchResult = averageMatchingLogic.process(tradeSideA,aggregationMatchResult);
-        System.out.println("averageMatchingLogic result: size - " + averageMatchResult.size());
-        System.out.println(MatchingResultUtil.print(averageMatchResult));
 
         return averageMatchResult;
     }

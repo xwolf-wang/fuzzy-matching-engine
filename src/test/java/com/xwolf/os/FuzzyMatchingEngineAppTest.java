@@ -8,6 +8,7 @@ import com.xwolf.os.service.RuleConfigSvc;
 import com.xwolf.os.service.TradeSvc;
 import com.xwolf.os.utils.CsvUtil;
 import com.xwolf.os.utils.EngineConstants;
+import com.xwolf.os.utils.MatchingResultUtil;
 import com.xwolf.os.utils.TradeConverter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -47,7 +48,7 @@ public class FuzzyMatchingEngineAppTest {
 
         Trade trade = tradeSvc.getAllTrades().stream().filter(e -> e.getTradeType().equals("channel2")).findFirst().orElse(null);
         System.out.println(trade);
-        matchingSvc.process(trade);
+        System.out.println(MatchingResultUtil.print(matchingSvc.process(trade)));
 
 
     }

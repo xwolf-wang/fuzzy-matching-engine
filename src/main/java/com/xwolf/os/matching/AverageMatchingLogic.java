@@ -40,7 +40,7 @@ public class AverageMatchingLogic {
     private boolean isAcceptableAveragePrecision(Double targetValue, List<FuzzyTrade> group, MatchRule rule) {
         Double groupAvg = group.stream().map(e->getAverageFieldValue(e.getTrade(),rule)).collect(Collectors.averagingDouble(p -> p.get()));
         log.info("group average value is:" + groupAvg);
-        if(Math.abs(targetValue - groupAvg) < rule.getAvgPrecision())
+        if(Math.abs(targetValue - groupAvg) <= rule.getAvgPrecision())
             return true;
 
         return false;

@@ -1,7 +1,6 @@
 package com.xwolf.os.matching;
 
 import com.xwolf.os.domain.FuzzyTrade;
-import com.xwolf.os.domain.MatchField;
 import com.xwolf.os.domain.MatchRule;
 import com.xwolf.os.domain.Trade;
 import com.xwolf.os.service.RuleConfigSvc;
@@ -43,7 +42,7 @@ public class FuzzyMatchingLogic {
         for (ExtractedResult result : results) {
             FuzzyTrade fuzzyTrade = new FuzzyTrade();
             fuzzyTrade.setTrade(tradesSideB.get(result.getIndex()));
-            fuzzyTrade.setFuzzyInfo(result);
+            fuzzyTrade.setFuzzyMatchInfo(result);
             fuzzyTradeList.add(fuzzyTrade);
         }
 
