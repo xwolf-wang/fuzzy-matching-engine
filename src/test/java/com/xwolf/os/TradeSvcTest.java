@@ -17,7 +17,7 @@ public class TradeSvcTest {
     @Test
     public void tes(){
         TradeSvc tradeSvc = new TradeSvc();
-        TestUtils.init_trades(tradeSvc);
+        TestUtils.init_trades(tradeSvc, "1-N");
         System.out.println("all trade list:");
         System.out.println(tradeSvc.getAllTrades());
 
@@ -26,12 +26,12 @@ public class TradeSvcTest {
 
         tradeSvc.setRuleConfigSvc(ruleConfigSvc);
 
-        List fillList = tradeSvc.findCandidateSideBTrades("fusion_execution");
-        System.out.println("fill trade list:");
+        List fillList = tradeSvc.findCandidateSideBTrades("channel2");
+        System.out.println("channel2 trade list:");
         System.out.println(fillList);
 
-        List execList = tradeSvc.findCandidateSideBTrades("fusion_fill");
-        System.out.println("execuation trade list:");
+        List execList = tradeSvc.findCandidateSideBTrades("channel1");
+        System.out.println("channel1 trade list:");
         System.out.println(execList);
 
     }

@@ -18,7 +18,7 @@ public class MandatoryMatchingLogicTest {
     @Test
     public void process(){
         TradeSvc tradeSvc = new TradeSvc();
-        TestUtils.init_trades(tradeSvc);
+        TestUtils.init_trades(tradeSvc, "1-N");
         System.out.println("all trade list:");
         System.out.println(tradeSvc.getAllTrades());
 

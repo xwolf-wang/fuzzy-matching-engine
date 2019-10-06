@@ -23,9 +23,9 @@ fusion_fill.csv
 ------------
    {
        "ruleName": "fusionRule",
-       "leftTradeType": "fusion_fill",
+       "leftTradeType": "channel1",
        "leftPrimaryKey": "oraderId",
-       "rightTradeType": "fusion_execution",
+       "rightTradeType": "channel2",
        "rightPrimaryKey": "tradeId",
        "cutoffRatio": 90,
        "avgPrecision": 0.2,

@@ -40,8 +40,8 @@ public class TestUtils {
         ruleConfigSvc.saveRule(rule);
     }
 
-    public static void init_trades(TradeSvc tradeSvc){
-        String filepath = "./src/test/resources/channel1.csv";
+    public static void init_trades(TradeSvc tradeSvc, String csvFolder){
+        String filepath = "./src/test/resources/" + csvFolder + "/channel1.csv";
 
         List<Map<String, String>> list = null;
         try {
@@ -51,7 +51,7 @@ public class TestUtils {
         }
         tradeSvc.addAll(list.stream().map(e -> TradeConverter.convertMap2Trade(e, "channel1", "oraderId")).collect(Collectors.toList()));
 
-        filepath = "./src/test/resources/channel2.csv";
+        filepath = "./src/test/resources/" + csvFolder + "/channel2.csv";
 
         List<Map<String, String>> execlist = null;
         try {

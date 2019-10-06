@@ -1,15 +1,10 @@
 package com.xwolf.os;
 
-import com.fasterxml.jackson.databind.MappingIterator;
-import com.fasterxml.jackson.dataformat.csv.CsvMapper;
-import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.xwolf.os.utils.CsvUtil;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author ming
@@ -20,14 +15,14 @@ public class CsvUtilTest {
 
     @Test
     public void test() throws IOException {
-        String filepath = "./src/test/resources/channel1.csv";
+        String filepath = "./src/test/resources/1-N/channel1.csv";
 
         List list = CsvUtil.readObjectsFromCsv(filepath);
         System.out.println(list);
     }
 
     @Test
-    public void testUpload(){
+    public void testUpload() {
         System.out.println(System.getProperty("user.dir"));
         System.out.println(CsvUtil.getRootPath());
     }
