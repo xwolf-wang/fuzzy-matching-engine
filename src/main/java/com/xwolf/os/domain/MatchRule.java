@@ -17,9 +17,9 @@ import java.util.Map;
 public class MatchRule {
     private String ruleName;
     private String leftTradeType;
-    private String leftPrimaryKey;
+    private String leftTradeKey;
     private String rightTradeType;
-    private String rightPrimaryKey;
+    private String rightTradeKey;
     private Integer cutoffRatio;
     private Double avgPrecision;
     private List<MatchField> matchFields = new ArrayList<>();

@@ -24,9 +24,9 @@ public class TestUtils {
         MatchRule rule = new MatchRule();
         rule.setRuleName("fusionRule");
         rule.setLeftTradeType("channel1");
-        rule.setLeftPrimaryKey("oraderId");
+        rule.setLeftTradeKey("oraderId");
         rule.setRightTradeType("channel2");
-        rule.setRightPrimaryKey("tradeId");
+        rule.setRightTradeKey("tradeId");
         rule.setCutoffRatio(90);
         rule.setAvgPrecision(0.2);
         rule.getMatchFields().add(new MatchField("tradePrice", "trdPrice", EngineConstants.AVG));

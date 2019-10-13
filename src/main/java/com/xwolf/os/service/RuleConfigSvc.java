@@ -65,10 +65,10 @@ public class RuleConfigSvc {
     public String findPrimaryKeyName(String tradeType) {
         MatchRule rule = findMatchRule(tradeType).get();
         if (rule.getLeftTradeType().equals(tradeType))
-            return rule.getLeftPrimaryKey();
+            return rule.getLeftTradeKey();
 
         if (rule.getRightTradeType().equals(tradeType))
-            return rule.getRightPrimaryKey();
+            return rule.getRightTradeKey();
 
         return null;
     }
