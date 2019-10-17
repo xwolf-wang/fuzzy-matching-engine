@@ -24,11 +24,11 @@ public class TestUtils {
         MatchRule rule = new MatchRule();
         rule.setRuleName("fusionRule");
         rule.setLeftTradeType("channel1");
-        rule.setLeftTradeKey("oraderId");
+        rule.setLeftTradeKey("orderId");
         rule.setRightTradeType("channel2");
         rule.setRightTradeKey("tradeId");
         rule.setCutoffRatio(90);
-        rule.setAvgPrecision(0.2);
+        rule.setAvgPrecision(1.0);
         rule.getMatchFields().add(new MatchField("tradePrice", "trdPrice", EngineConstants.AVG));
         rule.getMatchFields().add(new MatchField("quantity", "qty", EngineConstants.MANDATORY_AGGREGATE));
         rule.getMatchFields().add(new MatchField("firm", "firm", EngineConstants.MANDATORY));
@@ -49,7 +49,7 @@ public class TestUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        tradeSvc.addAll(list.stream().map(e -> TradeConverter.convertMap2Trade(e, "channel1", "oraderId")).collect(Collectors.toList()));
+        tradeSvc.addAll(list.stream().map(e -> TradeConverter.convertMap2Trade(e, "channel1", "orderId")).collect(Collectors.toList()));
 
         filepath = "./src/test/resources/" + csvFolder + "/channel2.csv";
 

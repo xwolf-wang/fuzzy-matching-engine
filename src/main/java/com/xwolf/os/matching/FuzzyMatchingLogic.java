@@ -32,6 +32,7 @@ public class FuzzyMatchingLogic {
         List<String> indexList = new ArrayList<>();
         for (Trade trd : tradesSideB) {
             indexList.add(generateMatchIndexByRule(trd, rule));
+
         }
 
         List<ExtractedResult> results = FuzzySearch.extractAll(generateMatchIndexByRule(tradeSideA, rule), indexList, rule.getCutoffRatio());

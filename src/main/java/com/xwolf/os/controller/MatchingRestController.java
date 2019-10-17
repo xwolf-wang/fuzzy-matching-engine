@@ -28,10 +28,17 @@ public class MatchingRestController {
 
     }
 
-    @GetMapping("/view/{channelName}/{primaryKey}")
+    @GetMapping("/view/{channelName}/{tradeKey}")
     public String view(@PathVariable String channelName,
-                          @PathVariable String primaryKey) {
-        return fuzzyMatchingEngineSvc.view(channelName, primaryKey);
+                          @PathVariable String tradeKey) {
+        return fuzzyMatchingEngineSvc.view(channelName, tradeKey);
+
+    }
+
+    @GetMapping("/viewAll/{channelNameA}/{channelNameB}")
+    public String viewAll(@PathVariable String channelNameA,
+                       @PathVariable String channelNameB) {
+        return fuzzyMatchingEngineSvc.viewAll(channelNameA, channelNameB);
 
     }
 

@@ -1,7 +1,6 @@
 package com.xwolf.os.matching;
 
 import com.xwolf.os.domain.FuzzyTrade;
-import com.xwolf.os.domain.MatchField;
 import com.xwolf.os.domain.MatchRule;
 import com.xwolf.os.domain.Trade;
 import com.xwolf.os.service.RuleConfigSvc;
@@ -23,11 +22,11 @@ import java.util.stream.Collectors;
  **/
 @Component
 @Log4j2
-public class AverageMatchingLogic {
+public class AverageMatchingFuzzyLogic {
     @Autowired
     RuleConfigSvc ruleConfigSvc;
 
-    public List<List<Trade>> process(Trade trade, List<List<Trade>> aggregationMatchResult) {
+    public List<List<FuzzyTrade>> process(Trade trade, List<List<FuzzyTrade>> aggregationMatchResult) {
         MatchRule rule = ruleConfigSvc.findMatchRule(trade.getTradeType()).get();
 
         Optional<Double> targetValue = getAverageFieldValue(trade, rule);
@@ -39,17 +38,15 @@ public class AverageMatchingLogic {
                 .collect(Collectors.toList());
     }
 
-    public List<Trade> processSingle(Trade trade, List<Trade> aggregationMatchResult) {
-        if(aggregationMatchResult.isEmpty())
-            return Collections.EMPTY_LIST;
+    public List<FuzzyTrade> processSingle(Trade trade, List<FuzzyTrade> aggregationMatchResult) {
 
-        List<List<Trade>> aggregation = new ArrayList<>();
+        List<List<FuzzyTrade>> aggregation = new ArrayList<>();
         aggregation.add(aggregationMatchResult);
         return process(trade,aggregation).stream().findFirst().orElse(Collections.emptyList());
     }
 
-    private boolean isAcceptableAveragePrecision(Double targetValue, List<Trade> group, MatchRule rule) {
-        Double groupAvg = group.stream().map(e->getAverageFieldValue(e,rule)).collect(Collectors.averagingDouble(p -> p.get()));
+    private boolean isAcceptableAveragePrecision(Double targetValue, List<FuzzyTrade> group, MatchRule rule) {
+        Double groupAvg = group.stream().map(e->getAverageFieldValue(e.getTrade(),rule)).collect(Collectors.averagingDouble(p -> p.get()));
         log.info("group average value is:" + groupAvg);
         if(Math.abs(targetValue - groupAvg) <= rule.getAvgPrecision())
             return true;
@@ -57,7 +54,7 @@ public class AverageMatchingLogic {
         return false;
     }
 
-    public Optional<Double> getAverageFieldValue(Trade trade, MatchRule rule) {
+    private Optional<Double> getAverageFieldValue(Trade trade, MatchRule rule) {
         if (rule.getLeftTradeType().equals(trade.getTradeType())) {
             return rule.getMatchFields().stream()
                     .filter(e -> e.getMatchingType().equals(EngineConstants.AVG))
@@ -71,19 +68,5 @@ public class AverageMatchingLogic {
         }
 
         return Optional.empty();
-    }
-
-    public void setAverageFieldValue(Trade trade, MatchRule rule, Double value) {
-        if (rule.getLeftTradeType().equals(trade.getTradeType())) {
-            rule.getMatchFields().stream()
-                    .filter(e -> e.getMatchingType().equals(EngineConstants.AVG))
-                    .map(e -> trade.getFields().put(e.getLeftField(),value.toString())).findFirst();
-        }
-
-        if (rule.getRightTradeType().equals(trade.getTradeType())) {
-            rule.getMatchFields().stream()
-                    .filter(e -> e.getMatchingType().equals(EngineConstants.AVG))
-                    .map(e -> trade.getFields().put(e.getLeftField(),value.toString())).findFirst();
-        }
     }
 }
