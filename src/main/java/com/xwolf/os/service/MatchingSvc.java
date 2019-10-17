@@ -162,6 +162,13 @@ public class MatchingSvc {
 
         System.out.println("N:N - " + finalmatchresult);
 
+        System.out.println("----unmatched trade List A");
+        System.out.println(unMatchedList);
+
+        System.out.println("----unmatched trade List B");
+        System.out.println(tradeBList);
+
+
         return finalmatchresult;
     }
 
