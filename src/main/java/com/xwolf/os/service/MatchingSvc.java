@@ -6,13 +6,11 @@ import com.xwolf.os.domain.Trade;
 import com.xwolf.os.matching.*;
 import com.xwolf.os.utils.EngineConstants;
 import com.xwolf.os.utils.MatchingResultUtil;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author ming
@@ -55,16 +53,33 @@ public class MatchingSvc {
         List<Trade> mandatoryMatchingResult = exactlyMatchLogic.process(tradeSideA,tradeBList,Arrays.asList(EngineConstants.MANDATORY));
 
         //do fuzzy match and show the ratio
-        List<FuzzyTrade> fuzzyMatchResult = fuzzyMatchingLogic.process(tradeSideA,mandatoryMatchingResult);
+        List<FuzzyTrade> fuzzyMatchResult = fuzzyMatchingLogic.processSingle(tradeSideA,mandatoryMatchingResult);
 
         //do aggregation
         List<List<FuzzyTrade>> aggregationMatchResult = aggregationMatchingFuzzyLogic.process(tradeSideA,fuzzyMatchResult);
-        MatchingResultUtil.print(aggregationMatchResult);
+        MatchingResultUtil.formatFuzzyGroup(aggregationMatchResult);
 
         //do average calculation
         List<List<FuzzyTrade>> averageMatchResult = averageMatchingFuzzyLogic.process(tradeSideA,aggregationMatchResult);
 
         return averageMatchResult;
+    }
+
+    public List<FuzzyTrade> processSingleFuzzy(Trade tradeSideA, List<Trade> tradeBList){
+
+        //do mandatory match
+        List<Trade> mandatoryMatchingResult = exactlyMatchLogic.process(tradeSideA,tradeBList,Arrays.asList(EngineConstants.MANDATORY));
+
+        //do aggregation
+        List<List<Trade>> aggregationMatchResult = aggregationMatchingLogic.process(tradeSideA,mandatoryMatchingResult,10);
+
+        //do average calculation
+        List<List<Trade>> averageMatchResult = averageMatchingLogic.process(tradeSideA,aggregationMatchResult);
+
+        //do fuzzy match and show the ratio
+        List<FuzzyTrade> fuzzyMatchResult = fuzzyMatchingLogic.processList(tradeSideA,averageMatchResult);
+
+        return fuzzyMatchResult;
     }
 
     public List<Trade> processSingle(Trade tradeSideA, List<Trade> tradeBList){

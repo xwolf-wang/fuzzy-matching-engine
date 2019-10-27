@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  * @create 2019-10-03 9:19 AM
  **/
 public class MatchingResultUtil {
-    public static String print(List<List<FuzzyTrade>> aggregateResult){
+    public static String formatFuzzyGroup(List<List<FuzzyTrade>> aggregateResult){
         StringBuffer sb = new StringBuffer();
         int i=1;
         sb.append("Matching result group size: " + aggregateResult.size() + "\n");

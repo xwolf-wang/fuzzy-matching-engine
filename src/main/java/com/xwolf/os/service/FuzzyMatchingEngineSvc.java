@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -50,13 +49,13 @@ public class FuzzyMatchingEngineSvc {
     public String match(String tradeType, Map fieldMap) {
         Trade trade = tradeSvc.save(tradeType,fieldMap);
         List<List<FuzzyTrade>> response = match(trade);
-        return MatchingResultUtil.print(response);
+        return MatchingResultUtil.formatFuzzyGroup(response);
     }
 
     public String view(String channelName, String tradeKey) {
         Trade trade = tradeSvc.findTradesByTradeTypeAndKey(channelName,tradeKey);
         List<List<FuzzyTrade>> response = match(trade);
-        return MatchingResultUtil.print(response);
+        return MatchingResultUtil.formatFuzzyGroup(response);
     }
 
     public String viewAll(String channelNameA, String channelNameB) {

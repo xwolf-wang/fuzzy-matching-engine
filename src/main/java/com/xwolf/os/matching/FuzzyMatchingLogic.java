@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +27,47 @@ public class FuzzyMatchingLogic {
     @Autowired
     RuleConfigSvc ruleConfigSvc;
 
-    public List<FuzzyTrade> process(Trade tradeSideA, List<Trade> tradesSideB) {
+
+    public List<FuzzyTrade> processGroup(Trade tradeSideA, List<Trade> tradesSideB) {
+        MatchRule rule = ruleConfigSvc.findMatchRule(tradeSideA.getTradeType()).get();
+
+        List<String> indexList = new ArrayList<>();
+        for (Trade trd : tradesSideB) {
+            indexList.add(generateMatchIndexByRule(trd, rule));
+
+        }
+
+        List<ExtractedResult> results = FuzzySearch.extractAll(generateMatchIndexByRule(tradeSideA, rule), indexList, rule.getCutoffRatio());
+
+
+        List<FuzzyTrade> fuzzyTradeList = new ArrayList<>();
+
+        for (ExtractedResult result : results) {
+            FuzzyTrade fuzzyTrade = new FuzzyTrade();
+            fuzzyTrade.setTrade(tradesSideB.get(result.getIndex()));
+            fuzzyTrade.setFuzzyMatchInfo(result);
+            fuzzyTradeList.add(fuzzyTrade);
+        }
+
+
+        return fuzzyTradeList;
+    }
+
+
+    public List<FuzzyTrade> processList(Trade tradeSideA, List<List<Trade>> averageMatchResult) {
+
+        return averageMatchResult.stream().map(e -> processSingle(tradeSideA,e))
+                .max((list1, list2) -> max(list1,list2)).orElse(Collections.EMPTY_LIST);
+
+    }
+
+    private int max(List<FuzzyTrade> list1, List<FuzzyTrade> list2) {
+
+        return list1.stream().map(e -> e.getFuzzyMatchInfo().getScore()).reduce(Integer::sum).get()
+                - list2.stream().map(e -> e.getFuzzyMatchInfo().getScore()).reduce(Integer::sum).get();
+    }
+
+    public List<FuzzyTrade> processSingle(Trade tradeSideA, List<Trade> tradesSideB) {
         MatchRule rule = ruleConfigSvc.findMatchRule(tradeSideA.getTradeType()).get();
 
         List<String> indexList = new ArrayList<>();
@@ -81,4 +122,5 @@ public class FuzzyMatchingLogic {
                 .filter(e -> e.getMatchingType().equals(EngineConstants.FUZZY))
                 .anyMatch(e -> StringUtils.equals(fieldName, e.getLeftField()));
     }
+
 }

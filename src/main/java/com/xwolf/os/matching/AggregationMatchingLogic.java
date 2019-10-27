@@ -19,7 +19,7 @@ public class AggregationMatchingLogic {
     @Autowired
     RuleConfigSvc ruleConfigSvc;
 
-    public List<List<Trade>> process(Trade tradeSideA, List<Trade> tradesSideB) {
+    public List<List<Trade>> process(Trade tradeSideA, List<Trade> tradesSideB,int count) {
         return searchSingle(tradeSideA, tradesSideB, 10);
     }
 

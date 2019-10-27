@@ -43,7 +43,7 @@ public class FuzzyMatchingEngineAppTest {
 
         Trade trade = tradeSvc.getAllTrades().stream().filter(e -> e.getTradeType().equals("channel2")).findFirst().orElse(null);
         System.out.println(trade);
-        System.out.println(MatchingResultUtil.print(fuzzyMatchingEngineSvc.match(trade)));
+        System.out.println(MatchingResultUtil.formatFuzzyGroup(fuzzyMatchingEngineSvc.match(trade)));
 
 
     }

@@ -25,9 +25,8 @@ public class AggregationMatchingFuzzyLogic {
         return searchSingle(tradeSideA, tradesSideB,10);
     }
 
-    public List<FuzzyTrade> processSingle(Trade tradeSideA, List<Trade> tradesSideB) {
-        List<FuzzyTrade> fuzzyTradeList = tradesSideB.stream().map(e -> convertToFuzzyTrade(e)).collect(Collectors.toList());
-        return searchSingle(tradeSideA, fuzzyTradeList,1).stream().findFirst().orElse(Collections.emptyList());
+    public List<FuzzyTrade> processSingle(Trade tradeSideA, List<FuzzyTrade> tradesSideB) {
+        return searchSingle(tradeSideA, tradesSideB,1).stream().findFirst().orElse(Collections.emptyList());
     }
 
     private FuzzyTrade convertToFuzzyTrade(Trade trade) {
