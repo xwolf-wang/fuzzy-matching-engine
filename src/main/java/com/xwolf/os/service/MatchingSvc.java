@@ -59,7 +59,6 @@ public class MatchingSvc {
 
         //do aggregation
         List<List<FuzzyTrade>> aggregationMatchResult = aggregationMatchingFuzzyLogic.process(tradeSideA,fuzzyMatchResult);
-        System.out.println("aggregationMatchResult result: size - " + aggregationMatchResult.size());
         MatchingResultUtil.print(aggregationMatchResult);
 
         //do average calculation
@@ -75,7 +74,6 @@ public class MatchingSvc {
 
         //do aggregation
         List<Trade> aggregationMatchResult = aggregationMatchingLogic.processSingle(tradeSideA,mandatoryMatchingResult);
-        System.out.println("aggregationMatchResult result: size - " + aggregationMatchResult.size());
 
         //do average calculation
         List<Trade> averageMatchResult = averageMatchingLogic.processSingle(tradeSideA,aggregationMatchResult);
@@ -83,7 +81,7 @@ public class MatchingSvc {
         return averageMatchResult;
     }
 
-    public Map<List<Trade>, List<Trade>> process(List<Trade> tradeAList, List<Trade> tradeBList) throws CloneNotSupportedException {
+    public Map<List<Trade>, List<Trade>> process(List<Trade> tradeAList, List<Trade> tradeBList, List<Trade> unMatchedA, List<Trade> unmatchedB) throws CloneNotSupportedException {
 
         Map<List<Trade>, List<Trade>> finalmatchresult = new HashMap<>();
 
@@ -104,8 +102,6 @@ public class MatchingSvc {
         tradeAList.removeAll(matchedList);
 
 
-        List<Trade> unMatchedList = new ArrayList<>();
-
         // get All N:N match
         while(tradeAList.size()>0) {
             Trade trade = tradeAList.get(0);
@@ -120,7 +116,7 @@ public class MatchingSvc {
             //if no more
             if(mandatorySameSideMatchingResult.size() == 1)
                 //add to unMatchedList
-                unMatchedList.add(trade);
+                unMatchedA.add(trade);
             else{
                 MatchRule rule = ruleConfigSvc.findMatchRule(trade.getTradeType()).get();
 
@@ -156,18 +152,11 @@ public class MatchingSvc {
             //
             finalmatchresult.putAll(subMatchTrades);
             //set into unmatch list
-            unMatchedList.addAll(mandatorySameSideMatchingResult);
+            unMatchedA.addAll(mandatorySameSideMatchingResult);
 
         }
 
-        System.out.println("N:N - " + finalmatchresult);
-
-        System.out.println("----unmatched trade List A");
-        System.out.println(unMatchedList);
-
-        System.out.println("----unmatched trade List B");
-        System.out.println(tradeBList);
-
+        unmatchedB.addAll(tradeBList);
 
         return finalmatchresult;
     }

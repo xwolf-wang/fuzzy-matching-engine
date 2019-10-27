@@ -5,6 +5,7 @@ import com.xwolf.os.utils.MatchingResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collector;
@@ -36,7 +37,9 @@ public class FuzzyMatchingEngineSvc {
     public Map<List<FuzzyTrade>, List<FuzzyTrade>> match (List<Trade> tradeAList, List<Trade> tradeBList)
     {
         try {
-            Map<List<Trade>, List<Trade>> response = matchingSvc.process(tradeAList, tradeBList);
+            List<Trade> unMatchedA = new ArrayList<>();
+            List<Trade> unMatchedB = new ArrayList<>();
+            Map<List<Trade>, List<Trade>> response = matchingSvc.process(tradeAList, tradeBList,unMatchedA,unMatchedB);
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
@@ -60,13 +63,26 @@ public class FuzzyMatchingEngineSvc {
         //get ChannelA trades
         List<Trade> trades = tradeSvc.getAllTrades();
         //get channelB trades
-
+        List<Trade> unMatchedA = new ArrayList<>();
+        List<Trade> unMatchedB = new ArrayList<>();
         //
         try {
-            matchingSvc.process(
+            Map<List<Trade>, List<Trade>> matchResult = matchingSvc.process(
                     trades.stream().filter(e -> e.getTradeType().equals("channel1")).collect(Collectors.toList()),
-                    trades.stream().filter(e -> e.getTradeType().equals("channel2")).collect(Collectors.toList())
+                    trades.stream().filter(e -> e.getTradeType().equals("channel2")).collect(Collectors.toList()),
+                    unMatchedA,
+                    unMatchedB
             );
+
+
+            System.out.println("----unmatched trade List A");
+            System.out.println(MatchingResultUtil.format(unMatchedA));
+
+            System.out.println("----unmatched trade List B");
+            System.out.println(MatchingResultUtil.format(unMatchedB));
+
+            System.out.println(MatchingResultUtil.format(matchResult));
+
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
