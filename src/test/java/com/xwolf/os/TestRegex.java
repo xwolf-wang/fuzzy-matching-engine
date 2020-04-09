@@ -15,6 +15,7 @@ public class TestRegex {
         Matcher matcher = pattern.matcher(str);
         while (matcher.find()){
             System.out.println(matcher.group(1));
+            System.out.println(matcher.group(0));
 //            System.out.println(matcher.group().replaceAll("<interfaceId>","").replaceAll("</interfaceId>",""));
 //            System.out.println(matcher.group(0).replaceAll("#|\\{|\\}",""));
         }
