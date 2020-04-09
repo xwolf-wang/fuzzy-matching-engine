@@ -11,7 +11,7 @@ import me.xdrop.fuzzywuzzy.model.ExtractedResult;
  * @create 2019-10-03 8:38 AM
  **/
 @Data
-public class FuzzyTrade extends Trade{
+public class FuzzyTrade{
     private Trade trade;
     private ExtractedResult fuzzyMatchInfo;
 

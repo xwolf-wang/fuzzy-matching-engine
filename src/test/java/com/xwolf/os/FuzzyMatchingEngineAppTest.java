@@ -49,6 +49,18 @@ public class FuzzyMatchingEngineAppTest {
     }
 
     @Test
+    public void test_1_N_fuzzy() {
+        TestUtils.init_rule(ruleConfigSvc);
+        TestUtils.init_trades(tradeSvc, "1-N");
+
+        Trade trade = tradeSvc.getAllTrades().stream().filter(e -> e.getTradeType().equals("channel2")).findFirst().orElse(null);
+        System.out.println(trade);
+        System.out.println(MatchingResultUtil.formatFuzzy(fuzzyMatchingEngineSvc.fuzzyMatch(trade)));
+
+
+    }
+
+    @Test
     public void test_N_N() {
         TestUtils.init_rule(ruleConfigSvc);
         TestUtils.init_trades(tradeSvc, "N-N");

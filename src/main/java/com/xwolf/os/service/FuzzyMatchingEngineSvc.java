@@ -33,6 +33,14 @@ public class FuzzyMatchingEngineSvc {
         return response;
     }
 
+    public List<FuzzyTrade> fuzzyMatch(Trade trade){
+        //get the other side trade list
+        List<Trade> candidateSideBTrades = tradeSvc.findCandidateSideBTrades(trade.getTradeType());
+
+        List<FuzzyTrade> response = matchingSvc.processSingleFuzzy(trade, candidateSideBTrades);
+        return response;
+    }
+
     public Map<List<FuzzyTrade>, List<FuzzyTrade>> match (List<Trade> tradeAList, List<Trade> tradeBList)
     {
         try {

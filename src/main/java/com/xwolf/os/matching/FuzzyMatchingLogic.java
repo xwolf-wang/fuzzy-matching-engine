@@ -28,31 +28,6 @@ public class FuzzyMatchingLogic {
     RuleConfigSvc ruleConfigSvc;
 
 
-    public List<FuzzyTrade> processGroup(Trade tradeSideA, List<Trade> tradesSideB) {
-        MatchRule rule = ruleConfigSvc.findMatchRule(tradeSideA.getTradeType()).get();
-
-        List<String> indexList = new ArrayList<>();
-        for (Trade trd : tradesSideB) {
-            indexList.add(generateMatchIndexByRule(trd, rule));
-
-        }
-
-        List<ExtractedResult> results = FuzzySearch.extractAll(generateMatchIndexByRule(tradeSideA, rule), indexList, rule.getCutoffRatio());
-
-
-        List<FuzzyTrade> fuzzyTradeList = new ArrayList<>();
-
-        for (ExtractedResult result : results) {
-            FuzzyTrade fuzzyTrade = new FuzzyTrade();
-            fuzzyTrade.setTrade(tradesSideB.get(result.getIndex()));
-            fuzzyTrade.setFuzzyMatchInfo(result);
-            fuzzyTradeList.add(fuzzyTrade);
-        }
-
-
-        return fuzzyTradeList;
-    }
-
 
     public List<FuzzyTrade> processList(Trade tradeSideA, List<List<Trade>> averageMatchResult) {
 

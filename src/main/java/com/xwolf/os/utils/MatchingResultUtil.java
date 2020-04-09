@@ -57,4 +57,16 @@ public class MatchingResultUtil {
         sb.append("--------------- \n");
         return sb.toString();
     }
+
+    public static String formatFuzzy(List<FuzzyTrade> fuzzyMatch) {
+        StringBuffer sb = new StringBuffer();
+        int i=1;
+        for(FuzzyTrade result : fuzzyMatch){
+            sb.append("------- \n");
+            sb.append(result + "\n");
+            i++;
+        }
+
+        return sb.toString();
+    }
 }
